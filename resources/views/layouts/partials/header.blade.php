@@ -2,6 +2,7 @@
     <div class="pq-header-diff-block">
         <div class="row g-0">
             <div class="col-lg-12">
+                
                 <div class="pq-bottom-header">
                     <div class="row g-0">
                         <div class="col-lg-12">
@@ -19,14 +20,11 @@
                                                 </form>
                                             </div>
                                             <div class="col-lg-8 text-end me-0 ">
-                                               
-                                                   <a href="{{route('gym.room')}} " type="button" class="btn btn-secondary">Salle a proximité</a>
-                                               
-                                                
+                                                <a href="{{route('gym.rooms.map')}} " type="button" class="btn btn-secondary">Salle a proximité</a>
                                                 @guest()
                                                 <a href="{{ route('auth.login') }}" type="button" class="btn btn-primary">Connexion</a>
                                                 @else
-                                                <a href="" type="button" class="btn btn-primary">Mon compte</a>
+                                                <a href="{{ route('dashboard.home') }}" type="button" class="btn btn-primary">Mon compte</a>
                                                 @endguest
                                             </div>
                                         </ul>

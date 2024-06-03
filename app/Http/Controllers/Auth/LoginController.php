@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -11,7 +13,29 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function store(Request $request )  {
-        dd('Hello LoginController!');
+    public function store(Request $request){
+        $validated = $request->validate(
+            [
+                'email' => 'required|email',
+                'password' => 'required',
+            ],
+            [
+                'email.required' => 'Veuillez entrer votre mail',
+                'email.email' => 'Votre adresse mail n\'est pas valide',
+                'password.required' => 'Veuillez saisir votre mot de passe ',
+            ]
+        );
+
+        if (! Auth::attempt($validated)) {
+            return back()->with([
+                'loginErrorMessage' => 'Votre adresse mail ou votre mot de passe est incorrect'
+            ]);
+        } else {
+            $user = User::where('email', $validated['email'])->first();
+
+            Auth::login($user);
+
+            return redirect()->route('welcome');
+        }
     }
 }

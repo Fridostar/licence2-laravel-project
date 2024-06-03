@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 @section('content')
 <section>
-    <div class="container col-6">
+    <div class="container col-8">
 
         <div class="card">
             <div class="card-body">
@@ -12,47 +12,82 @@
                         @csrf
                         <div class="container">
                             <div class="row">
-                                <div class="col-lg-12 mb-3">
+                                <div class="col-lg-6 mb-3">
                                     <div class="mb-3">
                                         <label for="firstName" class="form-label">Prénom :</label>
-                                        <input name="firstName" type="text" class="form-control" id="firstName" placeholder="Entrez votre prénom">
+                                        <input name="firstName" value="{{old('first_name')}}" type="text" class="form-control" id="firstName" placeholder="Entrez votre prénom">
                                     </div>
+                                    <span class="text-danger">
+                                        @error('firstName')
+                                        <small class="text-tiny">{{$message}}</small>
+                                        @enderror
+                                    </span>
                                 </div>
-                                <div class="col-lg-12 mb-3">
+                                <div class="col-lg-6 mb-3">
                                     <div class="mb-3">
                                         <label for="lastName" class="form-label">Nom :</label>
-                                        <input name="lastName" type="text" class="form-control" id="lastName" placeholder="Entrez votre nom">
+                                        <input name="lastName" value="{{old('lastName')}}" type="text" class="form-control" id="lastName" placeholder="Entrez votre nom">
                                     </div>
+                                    <span class="text-danger">
+                                        @error('lastName')
+                                        <small class="text-tiny">{{$message}}</small>
+                                        @enderror
+                                    </span>
                                 </div>
                                 <div class="col-lg-12 mb-3">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Adresse mail :</label>
-                                        <input name="email" type="email" class="form-control" id="email" placeholder="Votre adresse mail">
+                                        <input name="email" value="{{old('email')}}" type="email" class="form-control" id="email" placeholder="Votre adresse mail">
                                     </div>
+                                    <span class="text-danger">
+                                        @error('email')
+                                        <small class="text-tiny">{{$message}}</small>
+                                        @enderror
+                                    </span>
                                 </div>
                                 <div class="col-lg-6 mb-3">
                                     <div class="mb-3">
                                         <label for="phoneNumber" class="form-label">Télephone :</label>
-                                        <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" placeholder="Numéro de téléphone">
+                                        <input name="phoneNumber" value="{{old('phoneNumber')}}" type="text" class="form-control" id="phoneNumber" placeholder="Numéro de téléphone">
                                     </div>
-                                </div> 
+                                    <span class="text-danger">
+                                        @error('phoneNumber')
+                                        <small class="text-tiny">{{$message}}</small>
+                                        @enderror
+                                    </span>
+                                </div>
                                 <div class="col-lg-6 mb-3">
                                     <div class="mb-3">
                                         <label for="birthDate" class="form-label">Date de naissance :</label>
-                                        <input name="birthDate" type="date" class="form-control" id="birthDate" placeholder="">
+                                        <input name="birthDate" value="{{old('birthDate')}}" type="date" class="form-control" id="birthDate" placeholder="">
                                     </div>
+                                    <span class="text-danger">
+                                        @error('birthDate')
+                                        <small class="text-tiny">{{$message}}</small>
+                                        @enderror
+                                    </span>
                                 </div>
-                                <div class="col-lg-12 mb-3">
+                                <div class="col-lg-6 mb-3">
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Mot de passe :</label>
                                         <input name="password" type="password" class="form-control" id="password" placeholder="Votre mot de passe">
                                     </div>
+                                    <span class="text-danger">
+                                        @error('password')
+                                        <small class="text-tiny">{{$message}}</small>
+                                        @enderror
+                                    </span>
                                 </div>
-                                <div class="col-lg-12 mb-3">
+                                <div class="col-lg-6 mb-3">
                                     <div class="mb-3">
                                         <label for="passwordConfirmation" class="form-label">Confirmation :</label>
-                                        <input name="passwordConfirmation" type="password" class="form-control" id="passwordConfirmation" placeholder="Confirmerz le mot de passe">
+                                        <input name="password_confirmation" type="password" class="form-control" id="passwordConfirmation" placeholder="Confirmerz le mot de passe">
                                     </div>
+                                    <span class="text-danger">
+                                        @error('password_confirmation')
+                                        <small class="text-tiny">{{$message}}</small>
+                                        @enderror
+                                    </span>
                                 </div>
 
                                 <!-- submit boutton -->

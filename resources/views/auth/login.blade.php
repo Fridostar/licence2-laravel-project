@@ -6,21 +6,38 @@
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title text-center my-3">CONNEXION</h5>
+                <div class="text-center">
+                    <h5 class="card-title my-3">CONNEXION</h5>
+                    @if (Session::has('loginErrorMessage'))
+                    <div class="alert alert-danger">{{ Session::get('loginErrorMessage')}}</div>
+                    @endif
+                </div>
 
                 <div class="d-flex justify-content-center">
                     <form method="POST" action="{{ route('auth.doLogin') }}" class="row g-3">
                         @csrf
-                        <!-- email field -->
-                        <div class="col-12 mb-2">
-                            <label for="email" class="form-label">Adresse mail :</label>
-                            <input name="email" type="email" class="form-control" id="email" placeholder="Veuillez entrer votre mail...">
+                        <div class="col-lg-12 mb-3">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Adresse mail :</label>
+                                <input name="email" value="{{old('email')}}" type="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Veuillez entrer votre mail...">
+                            </div>
+                            <span class="text-danger">
+                                @error('email')
+                                <small class="text-tiny">{{$message}}</small>
+                                @enderror
+                            </span>
                         </div>
 
-                        <!-- password field -->
-                        <div class="col-12 mb-2">
-                            <label for="password" class="form-label">Mot de passe :</label>
-                            <input name="password"type="password" class="form-control" id="password" placeholder="Veuillez entrer votre mot de passe...">
+                        <div class="col-lg-12 mb-3">
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Mot de passe :</label>
+                                <input name="password" type="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Veuillez entrer votre mot de passe...">
+                            </div>
+                            <span class="text-danger">
+                                @error('password')
+                                <small class="text-tiny">{{$message}}</small>
+                                @enderror
+                            </span>
                         </div>
 
                         <!-- other field -->
@@ -34,7 +51,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <p class="text-end"><a href="{{ route('auth.forgot-password') }}">Mot de passe oublié</a></p>
+                                <p class="text-end"><a href="{{ route('auth.doRessetPassword') }}">Mot de passe oublié</a></p>
                             </div>
                         </div>
 
