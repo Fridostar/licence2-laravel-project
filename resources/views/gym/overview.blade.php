@@ -1,6 +1,8 @@
 @extends('layouts.guest')
 @section('content')
 
+<!-- @dump($listOutfits) -->
+
 <!-- Portfolio Single -->
 <section>
     <div class="container">
@@ -10,23 +12,12 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="pq-service-img">
-                            <img class="" src="{{ asset('front-tools/template-frontoffice/images/service/service-box-1/slider/1.jpg') }}" height="150px">
+                            <img class="" src="{{ $room->overview_image }}" height="150px">
                         </div>
                     </div>
                     <div class="col-lg-8">
-                        <h2>PRESENTATION</h2>
-                        <p>Project Summery are many variations of passages of Lorem Ipsum available, but the majority have
-                            suffered alteration in some form, by injected humour, or randomised words which don’t look even slightly
-                            believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn’t anything
-                            embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat
-                            predefined chunks as necessary, making this the first true generator on the Internet. It uses a
-                            dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate
-                            Lorem Ipsum which looks reasonable.</p>
-                        <p>Lorem Ipsum is simply dummy text of the printing and Lorem Ipsum is simply dummy typesetting industry.
-                            Lorem Ipsum is simply dummy Lorem Ipsum has been the industry’s standard dummy text ever since the
-                            1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It
-                            has survived not only five centuries, but also the leap into electronic typesetting, remaining
-                            essentially unchanged.</p>
+                        <h2 class="mb-3">{{ $room->name }}</h2>
+                        <p>{{ $room->description }}</p>
                     </div>
                 </div>
             </div>
@@ -37,111 +28,41 @@
 
         <div class="my-5">
             <div class="row">
-                <div class="col-lg-4">
+                @foreach($listOutfits as $outfit)
+                <div class="col-lg-4 mb-3">
                     <div class="card">
                         <div class="pq-service-img">
-                            <img class="" src="{{ asset('front-tools/template-frontoffice/img2/fitness-1990340_1280.png') }}" height="150px">
+                            <img class="" src="{{ $outfit->cover_image }}" height="150px">
                         </div>
                         <div class="card-body">
-                            <h6 class="card-title">Nom de l'equipement</h6>
-                            <p class="card-text">
-                            <h6>Description</h6>
-                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered
-                                alteration in some form</p>
-                            </p>
+                            <h6 class="card-title">{{ $outfit->name }}</h6>
+                            <p class="mb-3">{{ Str::limit($outfit->description, 80) }}</p>
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <h6>30000 XOF</h6>
+                                    <h6>{{ $outfit->sale_price }} {{ $outfit->currency }}</h6>
                                 </div>
                                 <div class="col-lg-6 text-end">
-                                    <span class="badge text-bg-danger">
-                                        <h6 class="text-white">Disponible</h6>
-                                    </span>
+                                    <h6>
+                                        @if($outfit->status == 0)
+                                        <span class="badge rounded-pill text-bg-danger">Indisponible</span>
+                                        @else
+                                        <span class="badge rounded-pill text-bg-info">Disponible</span>
+                                        @endif
+                                    </h6>
                                 </div>
                             </div>
-                            <div class="row w-100 ">
-                                <div class="col-lg-12 ">
-                                    <button type="button" class="btn btn-outline-primary mt-5 w-100" data-bs-toggle="modal" data-bs-target="">Acheter</button>
-                                </div>
-                            </div>
+                            
+                            <button type="button" class="btn btn-outline-primary mt-3 w-100" data-bs-toggle="modal" data-bs-target="">Acheter</button>
                         </div>
                     </div>
 
                 </div>
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="pq-service-img">
-                            <img class="" src="{{ asset('front-tools/template-frontoffice/img2/fitness-room-1178293_1280.jpg') }}" height="150px">
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title">Nom de l'equipement</h6>
-                            <p class="card-text">
-                            <h6>Description</h6>
-                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered
-                                alteration in some form</p>
-                            </p>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <h6>30000 XOF</h6>
-                                </div>
-                                <div class="col-lg-6 text-end">
-                                    <span class="badge text-bg-dark">
-                                        <h6 class="text-white">Indisponible</h6>
-                                    </span>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-outline-primary mt-5 w-100" data-bs-toggle="modal" data-bs-target="">Acheter</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="pq-service-img">
-                            <img class="" src="{{ asset('front-tools/template-frontoffice/img2/pexels-victorfreitas-949130.jpg') }}" height="150px">
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title">Nom de l'equipement</h6>
-                            <p class="card-text">
-                            <h6>Description</h6>
-                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered
-                                alteration in some form</p>
-                            </p>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <h6>30000 XOF</h6>
-                                </div>
-                                <div class="col-lg-6 text-end">
-                                    <span class="badge text-bg-danger">
-                                        <h6 class="text-white">Disponible</h6>
-                                    </span>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-outline-primary mt-5 w-100" data-bs-toggle="modal" data-bs-target="">Acheter</button>
-                        </div>
-                    </div>
-
-                </div>
+                @endforeach
             </div>
         </div>
 
         <!-- pagination -->
-        <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+        {{$listOutfits->links()}}
     </div>
 </section>
 

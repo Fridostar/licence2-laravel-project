@@ -1,53 +1,65 @@
 @extends('layouts.guest')
 @section('content')
 
-<section>
-    <div class="container ">
-        <div class="container text-center mb-5">
-            <h1>Bienvenu sur {{env('APP_NAME')}}</h1>
-            <p>Notre platforme vous propose nos différents salles de gym, ainsi que leur offres et services.</p>
-        </div>
+<!-- @dump($listRooms) -->
 
-        <div class="row ">
-            <div class="col-lg-4">
-                <a href="{{route('gym.rooms.overview')}}">
-                    <div class="card card-product">
+<section>
+    <div class="container mb-4">
+        <div class="d-flex justify-content-center ">
+            <div class="text-center mb-5">
+                <h1>Bienvenu sur {{env('APP_NAME')}}</h1>
+                <p>Notre platforme vous propose nos différents salles de gym, ainsi que leur offres et services.</p>
+
+                <div class="col-lg-12 ">
+                    <form class="d-flex " role="search">
+                        <input class="form-control me-2" type="search" placeholder="Recherchez une salle..." aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">rechercher</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach($listRooms as $room)
+            <div class="col-lg-4 mb-5">
+                <div class="card card-product">
+                    <!-- cover image -->
+                    <a href="{{ route('gym.rooms.overview', $room) }}">
                         <div class="pq-service-img">
-                            <img class="" src="{{ asset('front-tools/template-frontoffice/img/pexels-heyho-7031706.jpg') }}" alt="service-image">
+                            <img class="" src="{{ $room->cover_image }}" alt="service-image">
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Nom de la salle</h5>
-                            <h6>Tel: 59125822</h6>
-                            <h6>Email: fitness@gmail.com</h6>
-                            <h6>Site Web: siteweb.com</h6>
-                            <h6><span class="badge rounded-pill text-bg-info">PROMOTION</span></h6>
+                    </a>
+
+                    <div class="card-body">
+                        <a href="{{ route('gym.rooms.overview', $room) }}">
+                            <h5 class="card-title">{{ Str::limit($room->name, 22) }} </h5>
+                        </a>
+
+                        <h6>Tel: {{ $room->user->phone_number }}</h6>
+                        <h6 class="mb-2">Email: {{ Str::limit($room->user->email, 18) }}</h6>
+
+                        <div class="row">
+                            <div class="d-flex justify-content-between">
+                                <h6>
+                                    @if($room->status == 0)
+                                    <span class="badge rounded-pill text-bg-danger">Indisponible</span>
+                                    @else
+                                    <span class="badge rounded-pill text-bg-info">Disponible</span>
+                                    @endif
+                                </h6>
+                                <a href="{{ $room->site_url }}" target="_blank">
+                                    <h6 class="text-primary">Site web</h6>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
+            @endforeach
         </div>
     </div>
 
     <!-- pagination -->
-    <div class="mt-5">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+    {{$listRooms->links()}}
 </section>
 
 @endsection

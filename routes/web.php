@@ -26,7 +26,7 @@ Route::post('/auth/password-resset', [RessetPasswordController::class, 'store'])
 // gym
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 Route::get('/gym/rooms/map', [RoomController::class, 'showMap'])->name('gym.rooms.map');
-Route::get('/gym/rooms/overview', [RoomController::class, 'index'])->name('gym.rooms.overview');
+Route::get('/gym/rooms/overview/{id}', [RoomController::class, 'roomDetail'])->name('gym.rooms.overview');
 
 // protected routes
 Route::middleware(['auth',])->group(function () {
