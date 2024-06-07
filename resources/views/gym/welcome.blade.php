@@ -5,21 +5,20 @@
 
 <section>
     <div class="container mb-4">
-        <div class="d-flex justify-content-center ">
-            <div class="text-center mb-5">
+        <div class="d-flex justify-content-center row">
+            <div class="text-center">
                 <h1>Bienvenu sur {{env('APP_NAME')}}</h1>
                 <p>Notre platforme vous propose nos différents salles de gym, ainsi que leur offres et services.</p>
-
-                <div class="col-lg-12 ">
-                    <form class="d-flex " role="search">
-                        <input class="form-control me-2" type="search" placeholder="Recherchez une salle..." aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">rechercher</button>
-                    </form>
-                </div>
+            </div>
+            <div class="col-lg-7 mb-5">
+                <form method="GET" action="{{ route('welcome') }}" class="d-flex" role="search">
+                    <input name="search" class="form-control me-2" type="search" placeholder="Recherchez une salle..." aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Rechercher</button>
+                </form>
             </div>
         </div>
         <div class="row">
-            @foreach($listRooms as $room)
+            @forelse($listRooms as $room)
             <div class="col-lg-4 mb-5">
                 <div class="card card-product">
                     <!-- cover image -->
@@ -54,12 +53,16 @@
                     </div>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <div class="d-flex justify-content-center">
+                <img src="{{ asset('front-tools/empty_collection.jpeg') }}" alt="empty_collection" class="">
+            </div>
+            @endforelse
         </div>
     </div>
 
     <!-- pagination -->
-    {{$listRooms->links()}}
+    {{ $listRooms->withQueryString()->links() }}
 </section>
 
 @endsection

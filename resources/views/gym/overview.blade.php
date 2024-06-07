@@ -26,9 +26,21 @@
         <!-- offerts -->
         <h2 class="text-center">EQUIPEMENT DISPONIBLE</h2>
 
-        <div class="my-5">
+        <div class="d-flex justify-content-center row">
+            <div class="text-center">
+                <p>Voici la liste des équipements disponible pour cette salle</p>
+            </div>
+            <div class="col-lg-7 mb-5">
+                <form method="GET" action="{{ route('gym.rooms.overview', $room->id) }}" class="d-flex" role="search">
+                    <input name="search" class="form-control me-2" type="search" placeholder="Recherchez un équipement..." aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Rechercher</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="mb-5">
             <div class="row">
-                @foreach($listOutfits as $outfit)
+                @forelse($listOutfits as $outfit)
                 <div class="col-lg-4 mb-3">
                     <div class="card">
                         <div class="pq-service-img">
@@ -51,18 +63,22 @@
                                     </h6>
                                 </div>
                             </div>
-                            
+
                             <button type="button" class="btn btn-outline-primary mt-3 w-100" data-bs-toggle="modal" data-bs-target="">Acheter</button>
                         </div>
                     </div>
 
                 </div>
-                @endforeach
+                @empty
+                <div class="d-flex justify-content-center">
+                    <img src="{{ asset('front-tools/empty_collection.jpeg') }}" alt="empty_collection" class="">
+                </div>
+                @endforelse
             </div>
         </div>
 
         <!-- pagination -->
-        {{$listOutfits->links()}}
+        {{ $listOutfits->withQueryString()->links() }}
     </div>
 </section>
 

@@ -13,14 +13,13 @@
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <div id="pq-menu-contain" class="pq-menu-contain">
                                         <ul id="pq-main-menu" class="navbar-nav ml-auto">
-                                            <div class="col-lg-4 ">
-                                                <!-- <form class="d-flex " role="search">
-                                                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                                    <button class="btn btn-outline-success" type="submit">rechercher</button>
-                                                </form> -->
-                                            </div>
-                                            <div class="col-lg-8 text-end me-0 ">
-                                                <a href="{{route('gym.rooms.map')}} " type="button" class="btn btn-secondary">Salle a proximité</a>
+                                            <div class="col-lg-12 text-end me-0 ">
+                                                @if ( \Request::is('*/overview') )
+                                                <a href="{{ route('gym.rooms.subscription') }} " type="button" class="btn btn-secondary">M'abonner à la salle</a>
+                                                @else
+                                                <a href="{{ route('gym.rooms.map') }} " type="button" class="btn btn-secondary">Salle a proximité</a>
+                                                @endif
+                                                
                                                 @guest()
                                                 <a href="{{ route('auth.login') }}" type="button" class="btn btn-primary">Connexion</a>
                                                 @else

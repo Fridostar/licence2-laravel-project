@@ -26,7 +26,8 @@ Route::post('/auth/password-resset', [RessetPasswordController::class, 'store'])
 // gym
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 Route::get('/gym/rooms/map', [RoomController::class, 'showMap'])->name('gym.rooms.map');
-Route::get('/gym/rooms/overview/{id}', [RoomController::class, 'roomDetail'])->name('gym.rooms.overview');
+Route::get('/gym/rooms-{id}/overview', [RoomController::class, 'search'])->name('gym.rooms.overview');
+Route::get('/gym/rooms/subscription', [RoomController::class, 'subscription'])->name('gym.rooms.subscription');
 
 // protected routes
 Route::middleware(['auth',])->group(function () {
@@ -41,7 +42,7 @@ Route::middleware(['auth',])->group(function () {
         Route::get('/backoffice/pricing', [DashboardController::class, 'pricing'])->name('dashboard.pricing');
         Route::get('/backoffice/subscription', [DashboardController::class, 'subscriptions'])->name('dashboard.subscription');
     });
-
+    
     Route::middleware(['admin', 'manager'])->group(function () {
         Route::get('/backoffice/rooms', [DashboardController::class, 'roomsList'])->name('dashboard.rooms.list');
         Route::get('/backoffice/pricing', [DashboardController::class, 'pricing'])->name('dashboard.pricing');
