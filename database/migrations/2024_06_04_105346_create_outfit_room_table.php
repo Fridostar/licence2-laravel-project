@@ -28,6 +28,8 @@ return new class extends Migration
                   -> onUpdate('cascade')
                   ->onDelete('no action');
             
+            // $table->primary(['outfit_id', 'room_id']);
+            
             $table->timestamps();
         });
     }

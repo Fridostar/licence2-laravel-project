@@ -31,6 +31,8 @@ Route::get('/gym/rooms/subscription', [RoomController::class, 'subscription'])->
 
 // protected routes
 Route::middleware(['auth',])->group(function () {
+    Route::post('/auth/logout', [LoginController::class, 'destroy'])->name('auth.logout');
+
     Route::middleware(['admin',])->group(function () {
         Route::get('/backoffice/rooms', [DashboardController::class, 'roomsList'])->name('dashboard.rooms.list');
         Route::get('/backoffice/pricing', [DashboardController::class, 'pricing'])->name('dashboard.pricing');
@@ -50,4 +52,7 @@ Route::middleware(['auth',])->group(function () {
     });
 
     Route::get('/backoffice', [DashboardController::class, 'index'])->name('dashboard.home');
+
+    // FEDAPAY
+    Route::get('/fedapay-transaction', [DashboardController::class, 'index']);
 });

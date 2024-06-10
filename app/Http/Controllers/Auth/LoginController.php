@@ -38,4 +38,9 @@ class LoginController extends Controller
             return redirect()->route('welcome');
         }
     }
+
+    public function destroy() {
+        Auth::logout();
+        return redirect()->route('welcome');
+    }
 }

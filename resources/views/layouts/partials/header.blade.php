@@ -1,9 +1,10 @@
+<div class="pq-background-overlay"></div>
 <header id="pq-header" class="pq-header-style-1  pq-has-sticky">
     <div class="pq-header-diff-block">
         <div class="row g-0">
             <div class="col-lg-12">
-                
-                <div class="pq-bottom-header">
+
+                <div class="pq-bottom-header pq-header-sticky animated fadeInDown animate__faster">
                     <div class="row g-0">
                         <div class="col-lg-12">
                             <nav class="navbar navbar-expand-lg navbar-light">
@@ -19,11 +20,17 @@
                                                 @else
                                                 <a href="{{ route('gym.rooms.map') }} " type="button" class="btn btn-secondary">Salle a proximité</a>
                                                 @endif
-                                                
+
                                                 @guest()
                                                 <a href="{{ route('auth.login') }}" type="button" class="btn btn-primary">Connexion</a>
+                                                <a href="{{ route('auth.register') }}" type="button" class="btn btn-secondary">S'inscrire</a>
                                                 @else
-                                                <a href="{{ route('dashboard.home') }}" type="button" class="btn btn-primary">Mon compte</a>
+                                                <a href="{{ route('dashboard.home') }}" target="_blank" type="button" class="btn btn-primary">Mon compte</a>
+                                                
+                                                <a href="javascript:void" onclick="document.getElementById('logout-form').submit();" type="button" class="btn btn-primary">Déconnexion</a>
+                                                    <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
+                                                        @csrf
+                                                    </form>
                                                 @endguest
                                             </div>
                                         </ul>

@@ -8,7 +8,7 @@
         <div class="d-flex justify-content-center row">
             <div class="text-center">
                 <h1>Bienvenu sur {{env('APP_NAME')}}</h1>
-                <p>Notre platforme vous propose nos différents salles de gym, ainsi que leur offres et services.</p>
+                <p>Notre platforme vous propose nos différentes salles de gym, ainsi que leur offres et services.</p>
             </div>
             <div class="col-lg-7 mb-5">
                 <form method="GET" action="{{ route('welcome') }}" class="d-flex" role="search">

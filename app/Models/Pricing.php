@@ -5,20 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Room extends Model
+class Pricing extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'description',
-        'site_url',
-        'cover_image',
-        'overview_image',
-        'status',
+        'duration',
+        'price',
+        'currency',
         'user_id',
     ];
 
@@ -27,13 +24,8 @@ class Room extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function outfits(): BelongsToMany
+    public function transactions(): HasMany
     {
-        return $this->belongsToMany(Outfit::class);
-    }
-
-    public function subscriptions(): HasMany
-    {
-        return $this->hasMany(Subscription::class);
+        return $this->hasMany(Transaction::class);
     }
 }
