@@ -2,6 +2,7 @@
 @section('content')
 
 <!-- @dump($listRooms) -->
+                  
 
 <section>
     <div class="container mb-4">

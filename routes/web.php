@@ -4,7 +4,9 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\RessetPasswordController;
 use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Http\Controllers\Gym\Backoffice\DashboardController;
+use App\Http\Controllers\Backoffice\DashboardController;
+use App\Http\Controllers\Backoffice\ManagerController;
+use App\Http\Controllers\Backoffice\PricingController;
 use App\Http\Controllers\Gym\RoomController;
 use App\Http\Controllers\Gym\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -33,26 +35,31 @@ Route::get('/gym/rooms/subscription', [RoomController::class, 'subscription'])->
 Route::middleware(['auth',])->group(function () {
     Route::post('/auth/logout', [LoginController::class, 'destroy'])->name('auth.logout');
 
-    Route::middleware(['admin',])->group(function () {
-        Route::get('/backoffice/rooms', [DashboardController::class, 'roomsList'])->name('dashboard.rooms.list');
-        Route::get('/backoffice/pricing', [DashboardController::class, 'pricing'])->name('dashboard.pricing');
-        Route::get('/backoffice/subscription', [DashboardController::class, 'subscriptions'])->name('dashboard.subscription');
+    // actions that only user-role can do
+    Route::middleware(['user'])->group(function () {
+        //
     });
 
+    // actions that only manager-role can do
     Route::middleware(['manager',])->group(function () {
-        Route::get('/backoffice/rooms', [DashboardController::class, 'roomsList'])->name('dashboard.rooms.list');
-        Route::get('/backoffice/pricing', [DashboardController::class, 'pricing'])->name('dashboard.pricing');
-        Route::get('/backoffice/subscription', [DashboardController::class, 'subscriptions'])->name('dashboard.subscription');
+        Route::get('/backoffice/manager/home', [ManagerController::class, 'home'])->name('manager.home');
+
+        Route::get('/backoffice/manager/pricing', [PricingController::class, 'index'])->name('manager.pricing.index');
+        Route::post('/backoffice/manager/pricing', [PricingController::class, 'store'])->name('manager.pricing.store');
+        Route::get('/backoffice/manager/pricing/{id}', [PricingController::class, 'show'])->name('manager.pricing.show');
+        Route::put('/backoffice/manager/pricing/{id}', [PricingController::class, 'update'])->name('manager.pricing.update');
+        Route::delete('/backoffice/manager/pricing/{id}', [PricingController::class, 'destroy'])->name('manager.pricing.destroy');
     });
     
+    // actions that only admin-role can do
+    Route::middleware(['admin',])->group(function () {
+        // 
+    });
+    
+    // actions that only admin and manager can do
     Route::middleware(['admin', 'manager'])->group(function () {
-        Route::get('/backoffice/rooms', [DashboardController::class, 'roomsList'])->name('dashboard.rooms.list');
-        Route::get('/backoffice/pricing', [DashboardController::class, 'pricing'])->name('dashboard.pricing');
-        Route::get('/backoffice/subscription', [DashboardController::class, 'subscriptions'])->name('dashboard.subscription');
+        //
     });
 
     Route::get('/backoffice', [DashboardController::class, 'index'])->name('dashboard.home');
-
-    // FEDAPAY
-    Route::get('/fedapay-transaction', [DashboardController::class, 'index']);
 });

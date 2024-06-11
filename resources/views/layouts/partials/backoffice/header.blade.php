@@ -14,6 +14,6 @@
 
 <div class="header border-bottom">
     <div class="header-content">
-        <h2>@yield('title')</h2>
+        <h2>@yield('headerTitle')</h2>
     </div>
 </div>

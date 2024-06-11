@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="utf-8">
@@ -34,14 +34,19 @@
 
         @include('layouts.partials.backoffice.aside')
 
-
-        <div class="content-body">
-            <!-- row -->
-            <div class="container-fluid">
-                @yield('content')
+        <div class="content-body" style="min-height: 735px;">
+            <!-- show session msg -->
+            @if(session()->has('creatSucessifullMessage'))
+            <div class="alert alert-success text-white">
+                {{ session()->get('creatSucessifullMessage') }}
             </div>
+            @endif
+
+            @yield('content')
         </div>
     </div>
+
+    @yield('modal')
 
     <!-- Required vendors -->
     <script src="{{ asset('front-tools/template-backoffice/vendor/global/global.min.js') }}"></script>

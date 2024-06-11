@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'first_name' => 'Firdaous',
             'last_name'=> 'Mohamed',
-            'email'=> 'mohamedfidorce@gmail.com',
+            'email'=> 'root@gmail.com',
             'email_verified_at' => now(),
             'role'=> 'admin',
             'phone_number'=> fake()->phoneNumber(),
@@ -27,7 +27,19 @@ class DatabaseSeeder extends Seeder
             'password'=> bcrypt('123')
         ]);
 
-        User::factory(14)->create();
+
+        User::factory()->create([
+            'first_name' => 'Firdaous',
+            'last_name'=> 'Mohamed',
+            'email'=> 'mohamedfidorce@gmail.com',
+            'email_verified_at' => now(),
+            'role'=> 'manager',
+            'phone_number'=> fake()->phoneNumber(),
+            'birth_date'=> fake()->dateTimeBetween('-60 years', '-24 years'),
+            'password'=> bcrypt('123')
+        ]);
+
+        User::factory(13)->create();
         Outfit::factory(100)->create();
         Room::factory(20)->create();
         OutfitRoom::factory(50)->create();
