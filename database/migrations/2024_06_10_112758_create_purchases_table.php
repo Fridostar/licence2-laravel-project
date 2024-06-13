@@ -16,28 +16,28 @@ return new class extends Migration
 
             $table->unsignedBigInteger('transaction_id')->unique();
             $table->foreign('transaction_id')
-                ->references('transaction_id')
+                ->references('id')
                 ->on('transactions')
                 ->onDelete('no action')
                 ->onUpdate('cascade');
             
             $table->unsignedBigInteger('pricing_id');
             $table->foreign('pricing_id')
-                  ->references('pricing_id')
+                  ->references('id')
                   ->on('pricings')
                   ->onDelete('no action')
                   ->onUpdate('cascade');
 
             $table->unsignedBigInteger('outfit_id');
             $table->foreign('outfit_id')
-                ->references('outfit_id')
+                ->references('id')
                 ->on('outfits')
                 ->onDelete('no action')
                 ->onUpdate('cascade');
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
-                ->references('user_id')
+                ->references('id')
                 ->on('users')
                 ->onDelete('no action')
                 ->onUpdate('cascade');

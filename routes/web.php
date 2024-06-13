@@ -6,24 +6,25 @@ use App\Http\Controllers\Auth\RessetPasswordController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Backoffice\DashboardController;
 use App\Http\Controllers\Backoffice\ManagerController;
+use App\Http\Controllers\Backoffice\OutfitController;
 use App\Http\Controllers\Backoffice\PricingController;
 use App\Http\Controllers\Gym\RoomController;
 use App\Http\Controllers\Gym\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 // authentication routes
-Route::get('/auth/register', [RegisterController::class, 'index'])->name('auth.register');
-Route::post('/auth/register', [RegisterController::class, 'store'])->name('auth.doRegister');
+Route::get('/auth/register', [RegisterController::class, 'index'])->name('register');
+Route::post('/auth/register', [RegisterController::class, 'store'])->name('doRegister');
 
-Route::get('/auth/login', [LoginController::class, 'index'])->name('auth.login');
-Route::post('/auth/login', [LoginController::class, 'store'])->name('auth.doLogin');
+Route::get('/auth/login', [LoginController::class, 'index'])->name('login');
+Route::post('/auth/login', [LoginController::class, 'store'])->name('doLogin');
 
 // Email verification
 Route::get('email/verify/{id}', [VerifyEmailController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend/{id}', [VerifyEmailController::class, 'resend'])->name('verification.resend');
 
-Route::get('/auth/password-resset', [RessetPasswordController::class, 'index'])->name('auth.ressetPassword');
-Route::post('/auth/password-resset', [RessetPasswordController::class, 'store'])->name('auth.doRessetPassword');
+Route::get('/auth/password-resset', [RessetPasswordController::class, 'index'])->name('ressetPassword');
+Route::post('/auth/password-resset', [RessetPasswordController::class, 'store'])->name('doRessetPassword');
 
 // gym
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
@@ -33,7 +34,7 @@ Route::get('/gym/rooms/subscription', [RoomController::class, 'subscription'])->
 
 // protected routes
 Route::middleware(['auth',])->group(function () {
-    Route::post('/auth/logout', [LoginController::class, 'destroy'])->name('auth.logout');
+    Route::post('/auth/logout', [LoginController::class, 'destroy'])->name('logout');
 
     // actions that only user-role can do
     Route::middleware(['user'])->group(function () {
@@ -44,11 +45,20 @@ Route::middleware(['auth',])->group(function () {
     Route::middleware(['manager',])->group(function () {
         Route::get('/backoffice/manager/home', [ManagerController::class, 'home'])->name('manager.home');
 
+        // oldest route naming
+        // Route::get('/backoffice/manager/pricing', 'App\Http\Controllers\Backoffice\PricingController@index')->name('manager.pricing.index');
         Route::get('/backoffice/manager/pricing', [PricingController::class, 'index'])->name('manager.pricing.index');
         Route::post('/backoffice/manager/pricing', [PricingController::class, 'store'])->name('manager.pricing.store');
         Route::get('/backoffice/manager/pricing/{id}', [PricingController::class, 'show'])->name('manager.pricing.show');
         Route::put('/backoffice/manager/pricing/{id}', [PricingController::class, 'update'])->name('manager.pricing.update');
         Route::delete('/backoffice/manager/pricing/{id}', [PricingController::class, 'destroy'])->name('manager.pricing.destroy');
+
+        // 
+        Route::get('/backoffice/manager/outfit', [OutfitController::class, 'index'])->name('manager.outfit.index');
+        Route::post('/backoffice/manager/outfit', [OutfitController::class, 'store'])->name('manager.outfit.store');
+        Route::get('/backoffice/manager/outfit/{id}', [OutfitController::class, 'show'])->name('manager.outfit.show');
+        Route::put('/backoffice/manager/outfit/{id}', [OutfitController::class, 'update'])->name('manager.outfit.update');
+        Route::delete('/backoffice/manager/outfit/{id}', [OutfitController::class, 'destroy'])->name('manager.outfit.destroy');
     });
     
     // actions that only admin-role can do

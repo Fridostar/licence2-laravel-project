@@ -3,25 +3,23 @@
 namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
-use App\Models\Pricing;
+use App\Models\Outfit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PricingController extends Controller
+class OutfitController extends Controller
 {
-    // CRUD opérations
-
     public function index() {
-        $pricings = Pricing::all();
+        $outfits = Outfit::paginate(15);
 
-        if(isset($pricings)) {
+        if(isset($outfits)) {
             $title = "Êtes-vous sûr de vouloir supprimer ? ";
             $text = "Notez bien que cette action est irreversible !";
 
             confirmDelete($title, $text);
 
-            return view('backoffice.managers.pricing.index', [
-                'pricingList' => $pricings
+            return view('backoffice.managers.outfit.index', [
+                'outfitList' => $outfits
             ]);
         }
 
@@ -36,25 +34,25 @@ class PricingController extends Controller
             'price' => 'required|numeric',
         ]);
 
-        Pricing::create([
+        // dd($validatedData);
+
+        Outfit::create([
             'name' => $validatedData['name'],
             'duration' => $validatedData['duration'],
             'price' => $validatedData['price'],
             'user_id' => Auth::user()->id,
         ]);
 
-        toast( "Nouvel type d'abonnement ajouté avec succes", 'success');
+        toast( "Equipement ajouté avec succes", 'success');
         return redirect()->back();
-
-        // return redirect()->back()->with('creatSucessifullMessage', "Nouvel type d'abonnement ajouté avec succes");
     }
     
     public function show($id)
     {
-        $pricing = Pricing::find($id);
+        $outfit = Outfit::find($id);
         
-        return view('backoffice.managers.pricing.show', [
-            'pricing' => $pricing
+        return view('backoffice.managers.outfit.show', [
+            'pricing' => $outfit
         ]);
     }
 
@@ -67,27 +65,25 @@ class PricingController extends Controller
             'currency' => 'required|string',
         ]);
 
-        $pricing = Pricing::find($id);
+        $outfit = Outfit::find($id);
 
-        $pricing->update([
+        $outfit->update([
             'name' => $validatedData['name'],
             'duration' => $validatedData['duration'],
             'price' => $validatedData['price'],
             'currency' => $validatedData['currency'],
         ]);
-
-        toast( "Type d'abonnement modifié avec succes", 'success');
+        
+        toast( "Equipement mise-à-jour avec succes", 'success');
         return redirect()->back();
-
-        // return redirect()->back()->with('creatSucessifullMessage', "Type d'abonnement modifié avec succes");
     }
     
     public function destroy($id)
     {
-        $pricing = Pricing::find($id);
-        $pricing->delete();
+        $outfit = Outfit::find($id);
+        $outfit->delete();
         
-        toast( "Type d'abonnement supprimé avec succes", 'success');
+        toast( "Equipement supprimé avec succes", 'success');
         return redirect()->back();
     }
 }

@@ -50,6 +50,8 @@
     <!-- dynamically remplace the page content -->
     <div class="container">
         @yield('content')
+
+       
     </div>
 
     <!-- importe the footer.blade.php -->

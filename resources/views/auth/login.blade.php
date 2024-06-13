@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center">
-                    <form method="POST" action="{{ route('auth.doLogin') }}" class="row g-3">
+                    <form method="POST" action="{{ route('doLogin') }}" class="row g-3">
                         @csrf
                         <div class="col-lg-12 mb-3">
                             <div class="mb-3">
@@ -51,7 +51,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <p class="text-end"><a href="{{ route('auth.doRessetPassword') }}">Mot de passe oublié</a></p>
+                                <p class="text-end"><a href="{{ route('doRessetPassword') }}">Mot de passe oublié</a></p>
                             </div>
                         </div>
 
@@ -60,7 +60,7 @@
                             <button class="btn btn-primary w-100 py-2" type="submit">Se connecter</button>
                         </div>
 
-                        <span class="text-end">Pas inscrire? <a href="{{ route('auth.register') }}">Inscrivez-vous</a></span>
+                        <span class="text-end">Pas inscrire? <a href="{{ route('register') }}">Inscrivez-vous</a></span>
                     </form>
                 </div>
             </div>

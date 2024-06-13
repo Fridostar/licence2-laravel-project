@@ -49,15 +49,15 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" aria-expanded="false">
+                    <a href="{{ route('manager.outfit.index') }}" aria-expanded="false">
                         <i class="fas fa-table"></i>
-                        <span class="nav-text">Gérer les gymnases</span>
+                        <span class="nav-text">Gérer les équipements</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" aria-expanded="false">
                         <i class="fas fa-table"></i>
-                        <span class="nav-text">Gérer les équipements</span>
+                        <span class="nav-text">Gérer les gymnases</span>
                     </a>
                 </li>
                 <li>

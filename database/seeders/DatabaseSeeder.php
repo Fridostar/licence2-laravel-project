@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Outfit;
 use App\Models\OutfitRoom;
+use App\Models\Pricing;
 use App\Models\Room;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -43,5 +44,6 @@ class DatabaseSeeder extends Seeder
         Outfit::factory(100)->create();
         Room::factory(20)->create();
         OutfitRoom::factory(50)->create();
+        // Pricing::factory(4)->create();
     }
 }

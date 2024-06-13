@@ -27,6 +27,8 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
+    
     <!-- dynamically remplace the page content -->
     <div id="main-wrapper">
         @include('layouts.partials.backoffice.header')
@@ -36,17 +38,15 @@
 
         <div class="content-body" style="min-height: 735px;">
             <!-- show session msg -->
-            @if(session()->has('creatSucessifullMessage'))
+            <!-- @if(session()->has('creatSucessifullMessage'))
             <div class="alert alert-success text-white">
                 {{ session()->get('creatSucessifullMessage') }}
             </div>
-            @endif
+            @endif -->
 
             @yield('content')
         </div>
     </div>
-
-    @yield('modal')
 
     <!-- Required vendors -->
     <script src="{{ asset('front-tools/template-backoffice/vendor/global/global.min.js') }}"></script>

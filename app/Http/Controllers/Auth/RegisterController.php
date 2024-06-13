@@ -12,7 +12,7 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        return view('auth.register');
+        return view('register');
     }
 
     public function store(Request $request)
@@ -100,6 +100,6 @@ class RegisterController extends Controller
         event(new Registered($user));
         
         // redirect to login page
-        return redirect()->route('auth.login');
+        return redirect()->route('login');
     }
 }

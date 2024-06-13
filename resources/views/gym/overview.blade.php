@@ -1,6 +1,7 @@
 @extends('layouts.guest')
-@section('content')
 
+
+@section('content')
 <!-- @dump($listOutfits) -->
 
 <!-- Portfolio Single -->

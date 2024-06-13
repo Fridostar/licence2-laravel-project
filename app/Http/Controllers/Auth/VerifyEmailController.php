@@ -20,7 +20,7 @@ class VerifyEmailController extends Controller
             $user->markEmailAsVerified();
         }
 
-        return redirect()->route('auth.login');
+        return redirect()->route( login');
     }
 
     
@@ -36,6 +36,6 @@ class VerifyEmailController extends Controller
 
         $user->sendEmailVerificationNotification();
 
-        return response()->route('auth.login');
+        return response()->route( login');
     }
 }

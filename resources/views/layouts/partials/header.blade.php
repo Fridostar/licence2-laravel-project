@@ -22,21 +22,21 @@
                                                 @endif
 
                                                 @guest()
-                                                <a href="{{ route('auth.login') }}" type="button" class="btn btn-primary">Connexion</a>
-                                                <a href="{{ route('auth.register') }}" type="button" class="btn btn-secondary">S'inscrire</a>
+                                                <a href="{{ route('login') }}" type="button" class="btn btn-primary">Connexion</a>
+                                                <a href="{{ route('register') }}" type="button" class="btn btn-secondary">S'inscrire</a>
                                                 @else
 
                                                 <!-- redirect user to coresponding dashboard -->
                                                 @if( auth()->user()->role == 'admin' )
                                                 <a href="" target="_blank" type="button" class="btn btn-primary">Mon compte</a>
                                                 @elseif( auth()->user()->role == 'manager' )
-                                                <a href="{{ route('dashboard.manager.home') }}" target="_blank" type="button" class="btn btn-primary">Mon compte</a>
+                                                <a href="{{ route('manager.home') }}" target="_blank" type="button" class="btn btn-primary">Mon compte</a>
                                                 @else
                                                 <a href="{{ route('dashboard.home') }}" target="_blank" type="button" class="btn btn-primary">Mon compte</a>
                                                 @endif
 
                                                 <a href="javascript:void" onclick="document.getElementById('logout-form').submit();" type="button" class="btn btn-primary">Déconnexion</a>
-                                                <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                                     @csrf
                                                 </form>
                                                 @endguest
