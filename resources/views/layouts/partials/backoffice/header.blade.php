@@ -1,6 +1,6 @@
 <div class="nav-header">
     <a href="index.html" class="brand-logo">
-        <img src="{{ asset('front-tools/template-backoffice/images/logo_copy.png') }}" alt="" width="200">
+        <img src="{{ asset('front-tools/logo.png') }}" alt="" width="200">
 
     </a>
     <div class="nav-control">

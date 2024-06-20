@@ -17,13 +17,23 @@
     <!-- PAGE TITLE HERE -->
     <title>@yield('title') | Gym Room Dashboard</title>
 
-    <!-- FAVICONS ICON -->
-    <link rel="shortcut icon" type="image/png" href="{{ asset('front-tools/template-backoffice/images/favicon.png') }}">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ asset('front-tools/favicon.ico') }}">
     <!-- Datatable -->
     <link href="{{ asset('front-tools/template-backoffice/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link href="{{ asset('front-tools/template-backoffice/vendor/jquery-nice-select/css/nice-select.css') }}" rel="stylesheet">
     <link href="{{ asset('front-tools/template-backoffice/css/style.css') }}" rel="stylesheet">
+
+    <!-- tom select -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script> -->
+
+    @stack('style')
+
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body>
@@ -64,6 +74,20 @@
     <script src="{{ asset('front-tools/template-backoffice/js/dlabnav-init.js') }}"></script>
     <script src="{{ asset('front-tools/template-backoffice/js/demo.js') }}"></script>
     <script src="{{ asset('front-tools/template-backoffice/js/styleSwitcher.js') }}"></script>
+
+    <!-- tom select -->
+    <script>
+        new TomSelect(
+            'select[multiple]',
+            { 
+                plugins: {
+                    remove_button: {title: 'Retirer'}
+                }
+            }
+        )
+    </script>
+
+    @stack('script')
 </body>
 
 </html>

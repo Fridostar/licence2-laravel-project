@@ -8,6 +8,7 @@ use App\Http\Controllers\Backoffice\DashboardController;
 use App\Http\Controllers\Backoffice\ManagerController;
 use App\Http\Controllers\Backoffice\OutfitController;
 use App\Http\Controllers\Backoffice\PricingController;
+use App\Http\Controllers\Backoffice\RoomController as BackofficeRoomController;
 use App\Http\Controllers\Gym\RoomController;
 use App\Http\Controllers\Gym\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -53,12 +54,20 @@ Route::middleware(['auth',])->group(function () {
         Route::put('/backoffice/manager/pricing/{id}', [PricingController::class, 'update'])->name('manager.pricing.update');
         Route::delete('/backoffice/manager/pricing/{id}', [PricingController::class, 'destroy'])->name('manager.pricing.destroy');
 
-        // 
+        // CRUD method for equipment management by the manager
         Route::get('/backoffice/manager/outfit', [OutfitController::class, 'index'])->name('manager.outfit.index');
         Route::post('/backoffice/manager/outfit', [OutfitController::class, 'store'])->name('manager.outfit.store');
         Route::get('/backoffice/manager/outfit/{id}', [OutfitController::class, 'show'])->name('manager.outfit.show');
         Route::put('/backoffice/manager/outfit/{id}', [OutfitController::class, 'update'])->name('manager.outfit.update');
         Route::delete('/backoffice/manager/outfit/{id}', [OutfitController::class, 'destroy'])->name('manager.outfit.destroy');
+
+        // CRUD method for gym management by the manager
+        Route::get('/backoffice/manager/room', [BackofficeRoomController::class, 'index'])->name('manager.room.index');
+        Route::post('/backoffice/manager/room', [BackofficeRoomController::class, 'store'])->name('manager.room.store');
+        Route::get('/backoffice/manager/room/{id}', [BackofficeRoomController::class, 'show'])->name('manager.room.show');
+        Route::put('/backoffice/manager/room/{id}', [BackofficeRoomController::class, 'update'])->name('manager.room.update');
+        Route::delete('/backoffice/manager/room/{id}', [BackofficeRoomController::class, 'destroy'])->name('manager.room.destroy');
+
     });
     
     // actions that only admin-role can do

@@ -8,7 +8,7 @@
     <title>Fitsense - Gym and Fitness HTML Template</title>
     
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('front-tools/template-frontoffice/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('front-tools/favicon.ico') }}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('front-tools/template-frontoffice/css/bootstrap.min.css') }}">
     <!-- Owl Carousel CSS -->

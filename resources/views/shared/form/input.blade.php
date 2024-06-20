@@ -12,7 +12,7 @@
     <label for="{{ $name }}" class="form-label">{{ $label }}</label>
     <input name="{{ $name }}" value="{{old( $name, $value )}}" type="{{ $type }}" role="{{ $role }}"
         class=" {{ $class }} @error( $name ) is-invalid @enderror" id="{{ $name }}" 
-        placeholder=" {{ $placeholder }}" required>
+        placeholder=" {{ $placeholder }}">
 </div>
 <span class="text-danger">
     @error( $name )

@@ -1,6 +1,7 @@
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-    <form method="POST" action="{{ route('manager.outfit.store') }}" class="row g-3">
+    <form method="POST" action="{{ route('manager.outfit.store') }}" enctype="multipart/form-data" class="row g-3">
         @csrf
+        @method('POST')
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -13,27 +14,27 @@
 
                         <div class="row">
                             <div class="col-lg-8 mb-3">
-                                @include('shared.form.input', [ 'label' => "Nom de l'équipement", 'name' => "name", 'value' => "name", 'type' => "text", 'placeholder' => "Entrer le nom de l'équipement"])
+                            @include('shared.form.input', [ 'label' => "Nom de l'équipement", 'name' => "name", 'type' => "text", 'placeholder' => "Entrer le nom de l'équipement"])
                             </div>
 
                             <div class="col-lg-4">
-                                @include('shared.form.input', [ 'label' => "Prix de vente (Fcfa)", 'name' => "sale_price", 'value' => "sale_price", 'type' => "number", 'placeholder' => "Entrer le prix de l'équipement"])
+                            @include('shared.form.input', [ 'label' => "Prix de vente (Fcfa)", 'name' => "sale_price", 'type' => "number", 'placeholder' => "Entrer le prix de l'équipement"])
                             </div>
                         </div>
 
 
                         <div class="col-lg-12 mb-3">
-                        @include('shared.form.textarea', [ 'label' => "Description", 'name' => "description", 'placeholder' => "Entrer une description"])
+                            @include('shared.form.textarea', [ 'label' => "Description", 'name' => "description", 'placeholder' => "Entrer une description"])
                         </div>
 
                         <div class="row">
                             <div class="col-lg-10 mb-3">
-                                @include('shared.form.input', ['label' => "Image de couverture", 'name' => "cover_image", 'value' => "cover_image", 'type' => "file", 'placeholder' => "Choisissez une image"])
+                                @include('shared.form.input', ['label' => "Image de couverture", 'name' => "cover_image", 'type' => "file", 'placeholder' => "Choisissez une image"])
                             </div>
 
                             <div class="col-lg-2 mb-3 form-check form-switch">
                                 <br><br>
-                                @include('shared.form.input', [ 'class' => "form-check-input", 'label' => "Disponible ?", 'name' => "status", 'value' => "status", 'type' => "checkbox", 'role' => "switch"])
+                                @include('shared.form.checkswitch', [ 'label' => 'Disponible?', 'name' => 'status' ] )
                             </div>
                         </div>
                     </div>

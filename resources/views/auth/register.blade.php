@@ -8,7 +8,7 @@
                 <h5 class="card-title text-center my-3">INSCRIPTION</h5>
 
                 <div class="d-flex justify-content-center">
-                    <form method="POST" action="{{ route( doRegister') }}">
+                    <form method="POST" action="{{ route( 'doRegister') }}">
                         @csrf
                         <div class="container">
                             <div class="row">
@@ -95,7 +95,7 @@
                                     <button class="btn btn-primary w-100 py-2" type="submit">Se connecter</button>
                                 </div>
 
-                                <span class="text-end">Déjà un compte ? <a href="{{ route( login') }}">Me connecter</a></span>
+                                <span class="text-end">Déjà un compte ? <a href="{{ route( 'login') }}">Me connecter</a></span>
                             </div>
                         </div>
                     </form>

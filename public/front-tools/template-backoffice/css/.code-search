@@ -1,0 +1,9 @@
+# Query: pattern5
+# ContextLines: 1
+
+1 result - 1 file
+
+public/front-tools/template-backoffice/css/style.css:
+  14154      background: transparent;
+  14155:     background-image: url("");
+  14156      background-size: 130%; }

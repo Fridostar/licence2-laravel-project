@@ -55,7 +55,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" aria-expanded="false">
+                    <a href="{{ route('manager.room.index') }}" aria-expanded="false">
                         <i class="fas fa-table"></i>
                         <span class="nav-text">Gérer les gymnases</span>
                     </a>

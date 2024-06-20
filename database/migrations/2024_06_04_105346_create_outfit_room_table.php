@@ -28,9 +28,7 @@ return new class extends Migration
                   -> onUpdate('cascade')
                   ->onDelete('no action');
             
-            // $table->primary(['outfit_id', 'room_id']);
-            
-            $table->timestamps();
+            $table->primary(['outfit_id', 'room_id']);
         });
     }
 
@@ -39,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('outfit_rooms');
+        Schema::dropIfExists('outfit_room');
     }
 };

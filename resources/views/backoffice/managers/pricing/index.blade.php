@@ -54,7 +54,7 @@
                                                         <i class="fas fa-eye"></i>
                                                     </a>
                                                     <!-- edit item details -->
-                                                    <a href="{{ route('manager.pricing.update', $pricing->id) }}" type="button" class="btn btn-outline-success mx-1" data-bs-toggle="modal" data-bs-target="#updateModal">
+                                                    <a href="{{ route('manager.pricing.update', $pricing->id) }}" type="button" class="btn btn-outline-success mx-1" data-bs-toggle="modal" data-bs-target="#updateModal{{ $pricing->id }}">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     <!-- delete item from database -->

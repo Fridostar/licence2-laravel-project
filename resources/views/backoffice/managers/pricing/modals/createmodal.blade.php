@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="modal-footer justify-content-center">
-                    <button class="btn btn-dark" data-bs-dismiss="modal" aria-label="close">Annuler</button>
+                    <button class="btn btn-dark " data-bs-dismiss="modal" aria-label="close">Annuler</button>
                     <button class="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#modalcenter">Créer</button>
                 </div>
             </div>

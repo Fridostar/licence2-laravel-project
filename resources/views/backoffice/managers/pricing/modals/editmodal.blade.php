@@ -1,4 +1,4 @@
-<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+<div class="modal fade" id="updateModal{{ $pricing->id }}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
     <form method="POST" action="{{ route('manager.pricing.update', $pricing->id) }}" class="row g-3">
         @csrf
         @method('PUT')
