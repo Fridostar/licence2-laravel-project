@@ -12,7 +12,7 @@ class PricingController extends Controller
     // CRUD opérations
 
     public function index() {
-        $pricings = Pricing::all();
+        $pricings = Pricing::paginate();
 
         if(isset($pricings)) {
             $title = "Êtes-vous sûr de vouloir supprimer ? ";

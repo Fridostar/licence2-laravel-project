@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
 use App\Models\Outfit;
+use App\Models\Pricing;
 use App\Models\Room;
 use App\Services\FileService;
 use Illuminate\Http\Request;
@@ -14,24 +15,31 @@ class RoomController extends Controller
 {
     public function index()
     {
-        $rooms = Room::orderBy('id', 'desc')->paginate(50);
-        $outfits = Outfit::pluck('name', 'id');
-
+        // sweetalert msg config
         $title = "Êtes-vous sûr de vouloir supprimer ? ";
         $text = "Notez bien que cette action est irreversible !";
-
         confirmDelete($title, $text);
 
+        // view with data
         return view('backoffice.managers.room.index', [
-            'roomLists' => $rooms,
-            'outfits' => $outfits,
+            'roomLists' => Room::orderBy('id', 'desc')->paginate(),
+        ]);
+    }
+
+
+    public function create()
+    {
+        return view('backoffice.managers.room.form', [
+            'room' => new Room(),
+            'outfits' => Outfit::pluck('name', 'id'),
+            'pricings' => Pricing::pluck('name', 'id'),
+
         ]);
     }
 
     public function store(Request $request)
     {
         // dd($request->all());
-
         $validatedData = $request->validate([
             'name' => 'required|string',
             'site_url' => 'nullable|string',
@@ -40,24 +48,11 @@ class RoomController extends Controller
             'overview_image' => 'required|mimes:jpeg,png,jpg,gif',
             'status' => ['required', Rule::in(0, 1)],
             'outfits' => 'required|array',
+            'pricings' => 'required|array',
         ]);
 
-        dd($validatedData);
-
+        // dd($validatedData);
         (isset($request->site_url) == false) ? $siteUrl = 'http://127.0.0.1:8000' : $siteUrl = $validatedData['site_url'];
-
-        /* 2nd method
-            if( isset($request->site_url) ) {
-                $siteUrl = $validatedData['site_url'];
-            } else {
-                $siteUrl = 'http://127.0.0.1:8000';
-            }
-        */
-
-        /* 3rd method
-            $siteUrl = 'http://127.0.0.1:8000';
-            if( isset($request->site_url) )  $siteUrl = $validatedData['site_url'];
-        */
 
         // first create the room
         $room = Room::create([
@@ -70,85 +65,107 @@ class RoomController extends Controller
             'user_id' => Auth::user()->id,
         ]);
 
-        // next connect the room to outfits
+        // next connect the room & pricing to outfits
         $room->outfits()->sync($validatedData['outfits']);
+        $room->pricings()->sync($validatedData['pricings']);
+
+        // save new image in storage
+        $fileService = new FileService;
+        $coverImageUrl = $fileService->upload($validatedData['cover_image'], $room->id);
+        $overviewImageUrl = $fileService->upload($validatedData['overview_image'], $room->id);
 
         // then update the room images url
-        $file1 = $validatedData['cover_image'];
-        $file2 = $validatedData['overview_image'];
-
-        $fileService = new FileService;
-        $coverImageUrl = $fileService->upload($file1, $room->id);
-        $overviewImageUrl = $fileService->upload($file2, $room->id);
-
         $room->cover_image = $coverImageUrl;
         $room->overview_image = $overviewImageUrl;
         $room->save();
 
         // finaly redirect with success msg
-        toast("Nouvelle salle ajouté avec succes", 'success');
-        return redirect()->back();
+        toast("La nouvelle salle a été ajouté avec succes", 'success');
+        return to_route('manager.room.index');
     }
 
     public function show($id)
     {
-        $room = Room::find($id);
-
         return view('backoffice.managers.room.show', [
-            'room' => $room
+            'room' => Room::find($id)
         ]);
     }
+
+
+    public function edit($id)
+    {
+        return view('backoffice.managers.room.form', [
+            'room' => Room::find($id),
+            'outfits' => Outfit::pluck('name', 'id'),
+            'pricings' => Pricing::pluck('name', 'id'),
+        ]);
+    }
+
 
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
             'name' => 'required|string',
+            'site_url' => 'nullable|string',
             'description' => 'required|string',
-            'sale_price' => 'required|numeric',
-            'cover_image' => 'nullable|mimes:jpeg,png,jpg,gif',
+            'cover_image' => 'nullable',
+            'overview_image' => 'nullable',
             'status' => ['required', Rule::in(0, 1)],
+            'outfits' => 'required|array',
+            'pricings' => 'required|array',
         ]);
 
         // dd($validatedData);
         $room = Room::find($id);
+        $fileService = new FileService;
 
-        if ($request['cover_image']) {
-            $fileService = new FileService;
-            $filePublicUrl = $fileService->upload($request['cover_image'], $id);
+        // next update the connected the room & pricing on outfits
+        $room->outfits()->sync($validatedData['outfits']);
+        $room->pricings()->sync($validatedData['pricings']);
 
+        // if coverImage is set, then update
+        if (isset($request['cover_image'])) {
+            $coverImageUrl = $fileService->upload($request['cover_image'], $id);
             $room->update([
-                'name' => $validatedData['name'],
-                'description' => $validatedData['description'],
-                'cover_image' => $filePublicUrl,
-                'overview_image' => $filePublicUrl['overview_image'],
-                'status' => $validatedData['status'],
-                
-            ]);
-        } else {
-            $room->update([
-                'name' => $validatedData['name'],
-                'description' => $validatedData['description'],
-                'sale_price' => $validatedData['sale_price'],
-                'status' => $validatedData['status'],
+                'cover_image' => $coverImageUrl,
             ]);
         }
 
-        toast("Equipement mise-à-jour avec succes", 'success');
-        return redirect()->back();
+        // if overviewImage is set, then update
+        if (isset($request['overview_image'])) {
+            $overviewImageUrl = $fileService->upload($request['overview_image'], $id);
+            $room->update([
+                'overview_image' => $overviewImageUrl,
+            ]);
+        }
+
+        // finaly update the reste fields
+        $room->update([
+            'name' => $validatedData['name'],
+            'site_url' => $validatedData['site_url'],
+            'description' => $validatedData['description'],
+            'status' => $validatedData['status'],
+        ]);
+
+        toast("La salle a été mise-à-jour avec succes", 'success');
+        return to_route('manager.room.index');
     }
 
     public function destroy($id)
     {
+        $room = Room::find($id);
+
         // first delete the related resource image
 
         // next delete resource
-        $room = Room::find($id);
+        $room->outfits()->detach();
+        $room->pricings()->detach();
+
+        // delatethe resource
         $room->delete();
 
         // finaly redirect with success msg
-        toast("Equipement supprimé avec succes", 'success');
+        toast("La salle a été supprimée avec succes", 'success');
         return redirect()->back();
     }
 }
-
-

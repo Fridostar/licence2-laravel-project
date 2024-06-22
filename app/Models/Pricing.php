@@ -23,6 +23,11 @@ class Pricing extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    public function rooms(): HasMany
+    {
+        return $this->hasMany(Room::class);
+    }
 
     public function transactions(): HasMany
     {

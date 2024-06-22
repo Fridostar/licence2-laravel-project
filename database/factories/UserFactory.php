@@ -30,6 +30,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'role'=> fake()->randomElement(['user', 'manager', 'admin']),
             'phone_number'=> fake()->phoneNumber(),
+            'photo'=> fake()->imageUrl(),
             'birth_date'=> fake()->dateTimeBetween('-60 years', '-24 years'),
             'password'=> bcrypt('123')
         ];

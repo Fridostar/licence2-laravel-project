@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PricingFactory extends Factory
 {
-    public $managersIds = [];
-
     /**
      * Define the model's default state.
      *
@@ -21,20 +19,11 @@ class PricingFactory extends Factory
     {
         $managers = User::where('role', 'manager');
 
-        if(isset($managers)) {
-            foreach($managers as $manager) {
-                // $this->managersIds[] = $manager->id;
-                array_push($this->managersIds, $manager->id);
-            }
-            
-            return [
-                'name' => fake()->randomElement([' Offre Gold', 'Offre Platine', 'Offre Diamond']),
-                'duration' => fake()->text(),
-                'price' => fake()->randomNumber(),
-                'user_id'  => $this->managersIds[array_rand($this->managersIds)],
-            ];
-        }
-        
-        return null;
+        return [
+            'name' => fake()->randomElement([' Offre Gold', 'Offre Platine', 'Offre Diamond']),
+            'duration' => fake()->text(),
+            'price' => fake()->randomNumber(),
+            'user_id'  => fake()->randomElement($managers->pluck('id')),
+        ];
     }
 }

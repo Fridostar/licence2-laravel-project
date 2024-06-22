@@ -62,19 +62,16 @@ Route::middleware(['auth',])->group(function () {
         Route::delete('/backoffice/manager/outfit/{id}', [OutfitController::class, 'destroy'])->name('manager.outfit.destroy');
 
         // CRUD method for gym management by the manager
-        Route::get('/backoffice/manager/room', [BackofficeRoomController::class, 'index'])->name('manager.room.index');
-        Route::post('/backoffice/manager/room', [BackofficeRoomController::class, 'store'])->name('manager.room.store');
-        Route::get('/backoffice/manager/room/{id}', [BackofficeRoomController::class, 'show'])->name('manager.room.show');
-        Route::put('/backoffice/manager/room/{id}', [BackofficeRoomController::class, 'update'])->name('manager.room.update');
-        Route::delete('/backoffice/manager/room/{id}', [BackofficeRoomController::class, 'destroy'])->name('manager.room.destroy');
-
+        Route::prefix('backoffice')->name('manager.')->group(function () {
+            Route::resource('/manager/room', BackofficeRoomController::class);
+        });
     });
-    
+
     // actions that only admin-role can do
     Route::middleware(['admin',])->group(function () {
         // 
     });
-    
+
     // actions that only admin and manager can do
     Route::middleware(['admin', 'manager'])->group(function () {
         //

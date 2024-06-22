@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('duration');
             $table->integer('price');
-            $table->text('currency')->default('Fcfa');
+            $table->string('currency')->default('Fcfa');
             
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')

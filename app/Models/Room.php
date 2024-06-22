@@ -32,6 +32,11 @@ class Room extends Model
         return $this->belongsToMany(Outfit::class);
     }
 
+    public function pricings(): BelongsToMany
+    {
+        return $this->belongsToMany(Pricing::class);
+    }
+
     public function subscriptions(): HasMany
     {
         return $this->hasMany(Subscription::class);

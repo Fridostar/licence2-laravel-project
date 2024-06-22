@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class RessetPasswordController extends Controller
 {
     public function index() {
-        return view( resset-password');
+        return view( 'resset-password');
     }
 
 
