@@ -11,12 +11,12 @@
 
     
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('front-tools/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('template/favicon.ico') }}">
     <!-- Custom Stylesheet -->
-    <link href="{{ asset('front-tools/template-backoffice/vendor/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('front-tools/template-backoffice/vendor/select2/css/select2.min.css') }}"  rel="stylesheet">
-    <link href="{{ asset('front-tools/template-backoffice/vendor/jquery-nice-select/css/nice-select.css') }}" rel="stylesheet">
-    <link href="{{ asset('front-tools/template-backoffice/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('template/dashboad/vendor/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('template/dashboad/vendor/select2/css/select2.min.css') }}"  rel="stylesheet">
+    <link href="{{ asset('template/dashboad/vendor/jquery-nice-select/css/nice-select.css') }}" rel="stylesheet">
+    <link href="{{ asset('template/dashboad/css/style.css') }}" rel="stylesheet">
 
     @stack('style')
     
@@ -29,9 +29,9 @@
     
     <!-- dynamically remplace the page content -->
     <div id="main-wrapper">
-        @include('layouts.partials.backoffice.header')
+        @include('layouts.partials.private.header')
 
-        @include('layouts.partials.backoffice.aside')
+        @include('layouts.partials.private.aside')
 
         <div class="content-body" style="min-height: 735px;">
             <!-- show session msg -->
@@ -54,20 +54,20 @@
 
 
     <!-- Required vendors -->
-    <script src="{{ asset('front-tools/template-backoffice/vendor/global/global.min.js') }}"></script>
+    <script src="{{ asset('template/dashboad/vendor/global/global.min.js') }}"></script>
     
     {{-- sweet-alert --}}
-    <script src="{{ asset('front-tools/template-backoffice/vendor/sweetalert2/dist/sweetalert2.min.js') }}"></script>
-    <script src="{{ asset('front-tools/template-backoffice/js/plugins-init/sweetalert.init.js') }}"></script>
+    <script src="{{ asset('template/dashboad/vendor/sweetalert2/dist/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('template/dashboad/js/plugins-init/sweetalert.init.js') }}"></script>
 
-    <script src="{{ asset('front-tools/template-backoffice/vendor/jquery-nice-select/js/jquery.nice-select.min.js') }}"></script>
-    <script src="{{ asset('front-tools/template-backoffice/vendor/select2/js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('front-tools/template-backoffice/js/plugins-init/select2-init.js') }}"></script>
+    <script src="{{ asset('template/dashboad/vendor/jquery-nice-select/js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ asset('template/dashboad/vendor/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('template/dashboad/js/plugins-init/select2-init.js') }}"></script>
 
-    <script src="{{ asset('front-tools/template-backoffice/js/custom.min.js') }}"></script>
-    <script src="{{ asset('front-tools/template-backoffice/js/dlabnav-init.js') }}"></script>
-    <script src="{{ asset('front-tools/template-backoffice/js/demo.js') }}"></script>
-    <script src="{{ asset('front-tools/template-backoffice/js/styleSwitcher.js') }}"></script>
+    <script src="{{ asset('template/dashboad/js/custom.min.js') }}"></script>
+    <script src="{{ asset('template/dashboad/js/dlabnav-init.js') }}"></script>
+    <script src="{{ asset('template/dashboad/js/demo.js') }}"></script>
+    <script src="{{ asset('template/dashboad/js/styleSwitcher.js') }}"></script>
 
     @stack('script')
 </body>

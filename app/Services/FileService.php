@@ -12,15 +12,11 @@ class FileService {
         if(Storage::disk('public')->exists($uniqueFileName)) return;
         $storedFile = $file->storeAs('media', $uniqueFileName, 'public');
 
-        return $this->getFileUrl($storedFile);
-    }
-
-    public function getFileUrl($storedFile) {
-        return Storage::disk('public')->url($storedFile);
+        return $storedFile;
     }
     
-    public function delete($file) {
-        Storage::delete($file);
+    public function delete($filePath) {
+        Storage::disk('public')->delete($filePath);
     }
 
 }

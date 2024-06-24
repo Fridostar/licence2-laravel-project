@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Outfit extends Model
 {
@@ -26,8 +26,8 @@ class Outfit extends Model
         return $this->belongsTo(User::class);
     }
     
-    public function rooms(): HasMany
+    public function rooms(): BelongsToMany
     {
-        return $this->hasMany(Room::class);
+        return $this->belongsToMany(Room::class);
     }
 }

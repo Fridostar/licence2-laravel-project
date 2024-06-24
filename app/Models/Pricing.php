@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Pricing extends Model
 {
@@ -24,13 +24,13 @@ class Pricing extends Model
         return $this->belongsTo(User::class);
     }
     
-    public function rooms(): HasMany
+    public function rooms(): BelongsToMany
     {
-        return $this->hasMany(Room::class);
+        return $this->belongsToMany(Room::class);
     }
 
-    public function transactions(): HasMany
+    public function transactions(): BelongsToMany
     {
-        return $this->hasMany(Transaction::class);
+        return $this->belongsToMany(Transaction::class);
     }
 }

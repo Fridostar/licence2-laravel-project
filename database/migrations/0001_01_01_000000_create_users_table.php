@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone_number')->unique();
             $table->dateTime('birth_date');
             $table->string('role')->default('user');
-            $table->string('photo')->nullable()->default('http://localhost:8000/front-tools/pp.jpg');
+            $table->string('photo')->nullable()->default('avatar/default-pp.jpg');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
