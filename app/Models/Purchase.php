@@ -11,6 +11,9 @@ class Purchase extends Model
     use HasFactory;
 
     protected $fillable = [
+        'amount',
+        'outfit_quantity',
+        'status',
         'transaction_id',
         'pricing_id',
         'outfit_id',

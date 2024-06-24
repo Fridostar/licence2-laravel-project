@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('payment_reference')->unique();
-            $table->integer('payment_price_ttc');
-            $table->string('payment_currency')->default('Fcfa');
-            $table->string('payment_method');
-            $table->string('payment_status')->default('pending');
+            $table->string('reference')->unique();
+            $table->integer('amount')->default(0);
+            $table->integer('amount_ttc')->default(0);
+            $table->string('option');
+            $table->integer('outfit_quantity')->default(1);
+            $table->string('currency')->default('Fcfa');
+            $table->string('status')->default('pending');
 
             $table->unsignedBigInteger('pricing_id'); 
             $table->foreign('pricing_id')

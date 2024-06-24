@@ -4,6 +4,9 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\RessetPasswordController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Billing\BillingController;
+use App\Http\Controllers\Billing\PurchaseController;
+use App\Http\Controllers\Billing\SubscriptionController;
 use App\Http\Controllers\Site\Private\Admin\AdminDashboardController;
 use App\Http\Controllers\Site\Private\Manager\ManagerDashboardController;
 use App\Http\Controllers\Site\Private\User\UserDashboardController;
@@ -33,6 +36,9 @@ Route::get('rooms/map', [WelcomeController::class, 'map'])->name('app.rooms.map'
 Route::get('rooms/{id}/details', [WelcomeController::class, 'overview'])->name('app.rooms.overview');
 Route::get('rooms/{id}/subscription', [WelcomeController::class, 'subscription'])->name('app.rooms.subscription');
 
+/* monetisation */
+Route::any('billing/fedapay', [BillingController::class, 'useFedapay']);
+
 // application protected routes
 Route::middleware(['auth',])->group(function () {
     // actions that only admin and manager can do
@@ -40,6 +46,14 @@ Route::middleware(['auth',])->group(function () {
         Route::resource('/management/pricing', PricingController::class);
         Route::resource('/management/outfit', OutfitController::class);
         Route::resource('/management/room', RoomController::class);
+        
+        // purchases
+        Route::get('purchases', [PurchaseController::class, 'index']);
+        Route::get('purchases/{id}', [PurchaseController::class, 'show']);
+
+        // subscriptions
+        Route::get('subscriptions', [SubscriptionController::class, 'index']);
+        Route::get('subscriptions/{id}', [SubscriptionController::class, 'show']);
     })->middleware(['admin', 'manager']);
 
     // actions that only user-role can do

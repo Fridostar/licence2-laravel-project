@@ -12,8 +12,12 @@ class Transaction extends Model
 
     protected $fillable = [
         'reference',
-        'price_ttc',
+        'amount',
+        'amount_ttc',
+        'option',
+        'outfit_quantity',
         'currency',
+        'status',
         'pricing_id',
         'room_id',
         'outfit_id',

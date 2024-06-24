@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
+            $table->integer('amount')->default(0);
+            $table->dateTime('expiration_date');
+            $table->boolean('status')->default(true);
 
             $table->unsignedBigInteger('transaction_id')->unique();
             $table->foreign('transaction_id')

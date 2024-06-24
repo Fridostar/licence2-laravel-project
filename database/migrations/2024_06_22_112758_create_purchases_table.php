@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
+            $table->integer('amount')->default(0);
+            $table->integer('outfit_quantity')->default(1);
+            $table->string('status')->default('pending');
 
             $table->unsignedBigInteger('transaction_id')->unique();
             $table->foreign('transaction_id')
