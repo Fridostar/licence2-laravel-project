@@ -17,8 +17,9 @@
                         </div>
                     </div>
                     <div class="col-lg-8">
-                        <h2 class="mb-3">{{ $room->name }}</h2>
-                        <p>{{ $room->description }}</p>
+                        <button>M'enregister à la salle</button>
+                        <p style="text-align: justify;"><h2 class="mb-3">{{ $room->name }}</h2></p>
+                        <p style="text-align: justify;">{{ $room->description }}</p>
                     </div>
                 </div>
             </div>

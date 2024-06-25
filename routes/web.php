@@ -58,7 +58,7 @@ Route::middleware(['auth',])->group(function () {
 
     // actions that only user-role can do
     Route::middleware('user')->group(function () {
-        Route::get('user/dashboard', [UserDashboardController::class, 'home'])->name('user.dashboad ');
+        Route::get('user/dashboard', [UserDashboardController::class, 'home'])->name('user.dashboad');
     });
 
     // actions that only manager-role can do

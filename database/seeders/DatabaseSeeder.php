@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        $admin = User::create([
             'first_name' => 'Root',
             'last_name' => 'Admin',
             'email' => 'root@gmail.com',
@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123')
         ]);
 
-        $manager = User::create([
+        User::create([
             'first_name' => 'Firdaous',
             'last_name' => 'Mohamed',
             'email' => 'mohamedfidorce@gmail.com',
@@ -43,25 +43,25 @@ class DatabaseSeeder extends Seeder
                 'name' => "Offre 1: Abonnement d'une année (365 jours)",
                 'duration' => 360,
                 'price' => 120000,
-                'user_id'  => $manager->id,
+                'user_id'  => $admin->id,
             ],
             [
                 'name' => "Offre 2: Abonnement de six mois (180 jours)",
                 'duration' => 180,
                 'price' => 60000,
-                'user_id'  => $manager->id,
+                'user_id'  => $admin->id,
             ],
             [
                 'name' => "Offre 3: Abonnement de trois mois (90 jours)",
                 'duration' => 90,
                 'price' => 30000,
-                'user_id'  => $manager->id,
+                'user_id'  => $admin->id,
             ],
             [
                 'name' => "Offre 4: Abonnement d'un mois (30 jours)",
                 'duration' => 30,
                 'price' => 10000,
-                'user_id'  => $manager->id,
+                'user_id'  => $admin->id,
             ],
         ];
 
