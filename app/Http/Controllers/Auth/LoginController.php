@@ -35,13 +35,17 @@ class LoginController extends Controller
 
             Auth::login($user);
 
-            return redirect()->intended();
+
+            return redirect()->back();
+            // return redirect()->intended();
             // return redirect()->route('welcome');
         }
     }
 
     public function destroy() {
         Auth::logout();
-        return redirect()->route('app.welcome');
+
+        return redirect()->back();
+        // return redirect()->route('app.welcome');
     }
 }

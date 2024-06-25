@@ -37,7 +37,9 @@ Route::get('rooms/{id}/details', [WelcomeController::class, 'overview'])->name('
 Route::get('rooms/{id}/subscription', [WelcomeController::class, 'subscription'])->name('app.rooms.subscription');
 
 /* monetisation */
-Route::any('billing/fedapay', [BillingController::class, 'useFedapay']);
+// Route::any('billing/fedapay', [BillingController::class, 'useFedapay']);
+Route::post('rooms/{id}/details', [BillingController::class, 'useCheckoutJs']);
+Route::any('billing/fedapay/checkout', [BillingController::class, 'useCheckoutForm'])->name('fedapay.checkout.form');
 
 // application protected routes
 Route::middleware(['auth',])->group(function () {

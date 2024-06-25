@@ -92,7 +92,7 @@
 
                                 <!-- submit boutton -->
                                 <div class="col-12 mb-3">
-                                    <button class="btn btn-primary w-100 py-2" type="submit">Se connecter</button>
+                                    <button class="btn btn-primary w-100 py-2" type="submit">S'inscrire</button>
                                 </div>
 
                                 <span class="text-end">Déjà un compte ? <a href="{{ route( 'login') }}">Me connecter</a></span>

@@ -17,8 +17,15 @@
                         </div>
                     </div>
                     <div class="col-lg-8">
-                        <button>M'enregister à la salle</button>
-                        <p style="text-align: justify;"><h2 class="mb-3">{{ $room->name }}</h2></p>
+                        @if( auth()->user() )
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#availableSubsciption">M'enre gister à la salle</button>
+                        @else
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">M'enre gister à la salle</button>
+                        @endif
+
+                        <p style="text-align: justify;">
+                        <h2 class="mb-3">{{ $room->name }}</h2>
+                        </p>
                         <p style="text-align: justify;">{{ $room->description }}</p>
                     </div>
                 </div>
@@ -34,8 +41,8 @@
             </div>
             <div class="col-lg-7 mb-5">
                 {{-- <form method="GET" action="{{ route('app.rooms.overview', $room->id) }}" class="d-flex" role="search">
-                    <input name="search" class="form-control me-2" type="search" placeholder="Recherchez un équipement..." aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Rechercher</button>
+                <input name="search" class="form-control me-2" type="search" placeholder="Recherchez un équipement..." aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Rechercher</button>
                 </form> --}}
 
                 @include('shared.search', ['action' => "app.rooms.overview", 'actionParam' => $room->id, 'inputClass' => "form-control me-2", 'buttonClass' => "btn btn-outline-success"])
@@ -86,4 +93,56 @@
     </div>
 </section>
 
+<!-- available subscriptions modal -->
+<div class="modal fade" id="availableSubsciption" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content ">
+
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    @foreach($room->pricings as $pricing)
+                    <div class="col-lg-3 mx-3">
+                        <!-- <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">{{$pricing->name}}</button> -->
+                        <button  type="button"class="pay-btn btn btn-primary" data-transaction-amount="{{$pricing->price}}" data-transaction-description="Acheter mon produit" data-customer-email="{{$authenticatedUser->email}}" data-customer-lastname="{{$authenticatedUser->last_name}}">Payer {{$pricing->price}} FCFA</button>
+
+
+
+                        <!-- <form action="{{ route('fedapay.checkout.form') }}" method="POST">
+                            <input type="hidden" name="field" value="test">
+                            <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7" 
+                                data-public-key="pk_sandbox_7dxJL8HhhRXJb4LCbeAuV9IK" 
+                                data-button-text="Payer {{$pricing->price}}" 
+                                data-button-class="button-class" 
+                                data-transaction-amount="{{$pricing->price}}" 
+                                data-transaction-description="Description de la transaction" 
+                                data-customer-email="{{$authenticatedUser->email}}" 
+                                data-customer-lastname="{{$authenticatedUser->last_name}}"
+                                data-currency-iso="XOF"
+                            >
+                            </script>
+                        </form> -->
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 @endsection
+
+
+@push('script')
+<!-- <script type="text/javascript">
+    FedaPay.init('#pay-btn', {
+        public_key: 'pk_sandbox_7dxJL8HhhRXJb4LCbeAuV9IK'
+    });
+</script> -->
+
+<script type="text/javascript">
+    FedaPay.init('.pay-btn', {
+        public_key: 'pk_sandbox_7dxJL8HhhRXJb4LCbeAuV9IK'
+    });
+</script>
+@endpush('script')

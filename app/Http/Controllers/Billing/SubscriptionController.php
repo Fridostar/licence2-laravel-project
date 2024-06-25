@@ -48,13 +48,12 @@ class SubscriptionController extends Controller
             'user_id' => $transactionUserId,
         ]);
 
-        $subscription->save();
-
         // update user is_subscribed
         $customer = User::find($transactionUserId);
         $customer->update([
             'is_subscribed' => true,
         ]);
+        
         return $subscription;
         DB::commit();
     }

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Fitsense - Gym and Fitness HTML Template</title>
-    
+
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('template/favicon.ico') }}">
     <!-- Bootstrap CSS -->
@@ -33,6 +33,8 @@
     <link rel="stylesheet" href="{{ asset('template/application/css/style.css') }}">
     <!--  Responsive CSS -->
     <link rel="stylesheet" href="{{ asset('template/application/css/responsive.css') }}">
+
+    <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
 </head>
 
 <body>
@@ -51,7 +53,79 @@
     <div class="container">
         @yield('content')
 
-       
+        <!-- login modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- <h5 class="modal-title">INSCRIPTION</h5> -->
+                        <button class="btn-close" data-bs-dismiss="modal" aria-label="close"><span aria-hidden="true"></span></button>
+                    </div>
+                    <div class="modal-body ">
+                        <div class="text-center">
+                            <h5 class="card-title my-3">CONNEXION</h5>
+                            @if (Session::has('loginErrorMessage'))
+                            <div class="alert alert-danger">{{ Session::get('loginErrorMessage')}}</div>
+                            @endif
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <form method="POST" action="{{ route('doLogin') }}" class="row g-3">
+                                @csrf
+                                <div class="col-lg-12 mb-3">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Adresse mail :</label>
+                                        <input name="email" value="{{old('email')}}" type="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Veuillez entrer votre mail...">
+                                    </div>
+                                    <span class="text-danger">
+                                        @error('email')
+                                        <small class="text-tiny">{{$message}}</small>
+                                        @enderror
+                                    </span>
+                                </div>
+
+                                <div class="col-lg-12 mb-3">
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">Mot de passe :</label>
+                                        <input name="password" type="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Veuillez entrer votre mot de passe...">
+                                    </div>
+                                    <span class="text-danger">
+                                        @error('password')
+                                        <small class="text-tiny">{{$message}}</small>
+                                        @enderror
+                                    </span>
+                                </div>
+
+                                <!-- other field -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" id="staty-connect">
+                                            <label for="staty-connect">
+                                                Rester connecter
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="text-end"><a href="{{ route('doRessetPassword') }}">Mot de passe oublié</a></p>
+                                    </div>
+                                </div>
+
+                                <!-- submit boutton -->
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-2" type="submit">Se connecter</button>
+                                </div>
+
+                                <span class="text-end">Pas inscrire? <a href="{{ route('register') }}">Inscrivez-vous</a></span>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- <div class="modal-footer justify-content-center">
+                <button type="button"></button>
+            </div> -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- importe the footer.blade.php -->
@@ -60,29 +134,31 @@
 
 
     <!--jquery js-->
-    <scrip src="{{ asset('template/application/js/jquery.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/jquery.min.js') }}"></script>
     <!--bootstrap js-->
-    <scrip src="{{ asset('template/application/js/bootstrap.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/bootstrap.min.js') }}"></script>
     <!--owl-carousal-->
-    <scrip src="{{ asset('template/application/js/owl.carousel.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/owl.carousel.min.js') }}"></script>
     <!--isotope js-->
-    <scrip src="{{ asset('template/application/js/isotope.pkgd.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/isotope.pkgd.min.js') }}"></script>
     <!--countTo js-->
-    <scrip src="{{ asset('template/application/js/jquery.countTo.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/jquery.countTo.min.js') }}"></script>
     <!--Maginfic-Popup js-->
-    <scrip src="{{ asset('template/application/js/jquery.magnific-popup.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/jquery.magnific-popup.min.js') }}"></script>
     <!-- Animation JS -->
-    <scrip src="{{ asset('template/application/js/wow.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/wow.min.js') }}"></script>
     <!-- Rev Slider js -->
-    <scrip src="{{ asset('template/application/rev/js/rbtools.min.js') }}"></scrip>
-    <scrip src="{{ asset('template/application/rev/js/rs6.min.js') }}"></scrip>
-    <scrip src="{{ asset('template/application/js/rev-custom.js') }}"></scrip>
+    <script src="{{ asset('template/application/rev/js/rbtools.min.js') }}"></script>
+    <script src="{{ asset('template/application/rev/js/rs6.min.js') }}"></script>
+    <script src="{{ asset('template/application/js/rev-custom.js') }}"></script>
     <!-- Mouse Follower js -->
-    <scrip src="{{ asset('template/application/js/mouse-follower.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/mouse-follower.js') }}"></script>
     <!-- Simplebar js -->
-    <scrip src="{{ asset('template/application/js/simplebar.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/simplebar.min.js') }}"></script>
     <!--custom js-->
-    <scrip src="{{ asset('template/application/js/custom.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/custom.js') }}"></script>
+
+    @stack('script')
 </body>
 
 </html>

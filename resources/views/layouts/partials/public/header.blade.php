@@ -22,7 +22,8 @@
                                                 @endif
 
                                                 @guest()
-                                                <a href="{{ route('login') }}" type="button" class="btn btn-primary">Connexion</a>
+                                                <!-- <a href="{{ route('login') }}" type="button" class="btn btn-primary">Connexion</a> -->
+                                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Connexion</button>
                                                 <a href="{{ route('register') }}" type="button" class="btn btn-secondary">S'inscrire</a>
                                                 @else
                                                     <!-- redirect user to coresponding dashboard -->

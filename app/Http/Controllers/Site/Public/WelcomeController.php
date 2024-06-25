@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Site\Public;
 use App\Http\Controllers\Controller;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WelcomeController extends Controller
 {
@@ -50,6 +51,7 @@ class WelcomeController extends Controller
         return view('site.public.gym.overview', [
             "room" => $room,
             "listOutfits" => $outfits,
+            'authenticatedUser' => Auth::user(),
         ]);
     }
 

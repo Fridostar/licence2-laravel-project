@@ -46,29 +46,29 @@
 
     <!--jquery js-->
     <!-- <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script> -->
-    <scrip src="{{ asset('template/application/js/jquery.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/jquery.min.js') }}"></script>
     <!--bootstrap js-->
-    <scrip src="{{ asset('template/application/js/bootstrap.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/bootstrap.min.js') }}"></script>
     <!--owl-carousal-->
-    <scrip src="{{ asset('template/application/js/owl.carousel.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/owl.carousel.min.js') }}"></script>
     <!--isotope js-->
-    <scrip src="{{ asset('template/application/js/isotope.pkgd.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/isotope.pkgd.min.js') }}"></script>
     <!--countTo js-->
-    <scrip src="{{ asset('template/application/js/jquery.countTo.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/jquery.countTo.min.js') }}"></script>
     <!--Maginfic-Popup js-->
-    <scrip src="{{ asset('template/application/js/jquery.magnific-popup.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/jquery.magnific-popup.min.js') }}"></script>
     <!-- Animation JS -->
-    <scrip src="{{ asset('template/application/js/wow.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/wow.min.js') }}"></script>
     <!-- Rev Slider js -->
-    <scrip src="{{ asset('template/application/rev/js/rbtools.min.js') }}"></scrip>
-    <scrip src="{{ asset('template/application/rev/js/rs6.min.js') }}"></scrip>
-    <scrip src="{{ asset('template/application/js/rev-custom.js') }}"></scrip>
+    <script src="{{ asset('template/application/rev/js/rbtools.min.js') }}"></script>
+    <script src="{{ asset('template/application/rev/js/rs6.min.js') }}"></script>
+    <script src="{{ asset('template/application/js/rev-custom.js') }}"></script>
     <!-- Mouse Follower js -->
-    <scrip src="{{ asset('template/application/js/mouse-follower.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/mouse-follower.js') }}"></script>
     <!-- Simplebar js -->
-    <scrip src="{{ asset('template/application/js/simplebar.min.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/simplebar.min.js') }}"></script>
     <!--custom js-->
-    <scrip src="{{ asset('template/application/js/custom.js') }}"></scrip>
+    <script src="{{ asset('template/application/js/custom.js') }}"></script>
 </body>
 
 </html>

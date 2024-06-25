@@ -44,7 +44,7 @@ class BillingService
 
         if ($option == 'purchase') {
             // create purchase for user
-            $$purchase = $purchaseController->store(
+            $purchase = $purchaseController->store(
                 $transaction->id,
                 $amount,
                 $pricingId,
