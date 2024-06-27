@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Site\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Room;
+use App\Services\FedapayService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,6 +47,9 @@ class WelcomeController extends Controller
         } else {
             $outfits = $room->outfits()->orderBy('id', 'desc')->paginate(3);
         }
+
+        $fedapayService = new FedapayService();
+        $fedapayService->useCheckout();
 
         // return the view with de rooms data
         return view('site.public.gym.overview', [

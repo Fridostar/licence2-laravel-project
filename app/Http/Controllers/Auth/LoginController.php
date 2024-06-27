@@ -35,10 +35,11 @@ class LoginController extends Controller
 
             Auth::login($user);
 
+            if( $request->modal == "true" ) {
+                return redirect()->back();
+            }
 
-            return redirect()->back();
-            // return redirect()->intended();
-            // return redirect()->route('welcome');
+            return redirect()->route('app.welcome');
         }
     }
 

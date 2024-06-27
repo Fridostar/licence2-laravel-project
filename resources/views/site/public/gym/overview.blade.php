@@ -1,6 +1,5 @@
 @extends('layouts.guest')
 
-
 @section('content')
 <!-- @dump($listOutfits) -->
 
@@ -17,11 +16,40 @@
                         </div>
                     </div>
                     <div class="col-lg-8">
-                        @if( auth()->user() )
+                        @auth
+                        <!-- available subscriptions modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#availableSubsciption">M'enre gister à la salle</button>
+                        <div class="modal fade" id="availableSubsciption" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content ">
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-center">
+                                            @foreach($room->pricings as $pricing)
+                                            <div class="col-lg-3 mx-3">
+                                                <button onclick="payement( 
+                                                        'subscription',
+                                                        '<?php echo ($pricing->id) ?>',
+                                                        '<?php echo ($room->id) ?>',
+                                                        'null',
+                                                        '<?php echo ($authenticatedUser->id) ?>',
+                                                        '<?php echo ($pricing->price) ?>', 
+                                                        '<?php echo ($authenticatedUser->email) ?>', 
+                                                        '<?php echo ($authenticatedUser->last_name) ?>', 
+                                                        '<?php echo ($authenticatedUser->first_name) ?>'
+                                                    )" class="btn btn-outline-primary">
+                                                    Payer {{ $pricing->price }} FCFA
+                                                </button>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         @else
                         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">M'enre gister à la salle</button>
-                        @endif
+                        @endauth
+
 
                         <p style="text-align: justify;">
                         <h2 class="mb-3">{{ $room->name }}</h2>
@@ -93,56 +121,53 @@
     </div>
 </section>
 
-<!-- available subscriptions modal -->
-<div class="modal fade" id="availableSubsciption" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content ">
-
-            <div class="modal-body">
-                <div class="d-flex justify-content-center">
-                    @foreach($room->pricings as $pricing)
-                    <div class="col-lg-3 mx-3">
-                        <!-- <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">{{$pricing->name}}</button> -->
-                        <button  type="button"class="pay-btn btn btn-primary" data-transaction-amount="{{$pricing->price}}" data-transaction-description="Acheter mon produit" data-customer-email="{{$authenticatedUser->email}}" data-customer-lastname="{{$authenticatedUser->last_name}}">Payer {{$pricing->price}} FCFA</button>
-
-
-
-                        <!-- <form action="{{ route('fedapay.checkout.form') }}" method="POST">
-                            <input type="hidden" name="field" value="test">
-                            <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7" 
-                                data-public-key="pk_sandbox_7dxJL8HhhRXJb4LCbeAuV9IK" 
-                                data-button-text="Payer {{$pricing->price}}" 
-                                data-button-class="button-class" 
-                                data-transaction-amount="{{$pricing->price}}" 
-                                data-transaction-description="Description de la transaction" 
-                                data-customer-email="{{$authenticatedUser->email}}" 
-                                data-customer-lastname="{{$authenticatedUser->last_name}}"
-                                data-currency-iso="XOF"
-                            >
-                            </script>
-                        </form> -->
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
 @endsection
 
 
 @push('script')
-<!-- <script type="text/javascript">
-    FedaPay.init('#pay-btn', {
-        public_key: 'pk_sandbox_7dxJL8HhhRXJb4LCbeAuV9IK'
-    });
-</script> -->
-
 <script type="text/javascript">
-    FedaPay.init('.pay-btn', {
-        public_key: 'pk_sandbox_7dxJL8HhhRXJb4LCbeAuV9IK'
-    });
+    function setCookie(name, value, days) {
+        var expires = "";
+
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    function payement(
+        option, pricingId, roomId, outfitId, userId, transAmount, 
+        transUserEmail, transUserLastname, transUserFirstname
+    ) {
+        let widget = FedaPay.init({
+            public_key: 'pk_sandbox_sqZQ7mDXl4gnj_lOM6CXyx-a',
+            transaction: {
+                amount: transAmount,
+                description: 'Acheter mon produit',
+                custom_metadata: {
+                    "option": option,
+                    "pricing_id": pricingId,
+                    "room_id": roomId,
+                    "outfit_id": outfitId,
+                    "user_id": userId,
+                },
+            },
+            customer: {
+                email: transUserEmail,
+                lastname: transUserLastname,
+                firstname: transUserFirstname,
+            },
+            onComplete(response) {
+                if (response.transaction.status === "approved") {
+                    setCookie('approuvedTransaction', JSON.stringify(response.transaction), 1)
+                    // localStorage.setItem('transaction', JSON.stringify(response.transaction));
+                }
+            }
+        });
+        
+        widget.open();
+    }
 </script>
 @endpush('script')

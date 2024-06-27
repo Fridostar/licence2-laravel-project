@@ -26,11 +26,11 @@ return new class extends Migration
 
             $table->unsignedBigInteger('pricing_id');
             $table->foreign('pricing_id')
-                  ->references('id')
-                  ->on('pricings')
-                  ->onDelete('no action')
-                  ->onUpdate('cascade');
-    
+                ->references('id')
+                ->on('pricings')
+                ->onDelete('no action')
+                ->onUpdate('cascade');
+
             $table->unsignedBigInteger('room_id')->nullable();
             $table->foreign('room_id')
                 ->references('id')
@@ -40,11 +40,11 @@ return new class extends Migration
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
-                  ->references('id')
-                  ->on('users')
-                  ->onDelete('no action')
-                  ->onUpdate('cascade');
-        
+                ->references('id')
+                ->on('users')
+                ->onDelete('no action')
+                ->onUpdate('cascade');
+
             $table->timestamps();
         });
     }

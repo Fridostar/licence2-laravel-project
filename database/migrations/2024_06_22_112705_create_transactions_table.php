@@ -33,16 +33,14 @@ return new class extends Migration
                     ->references('id')
                     ->on('rooms')
                     ->onDelete('no action')
-                    ->onUpdate('cascade')
-                    ->nullable();
+                    ->onUpdate('cascade');
 
             $table->unsignedBigInteger('outfit_id')->nullable(); 
             $table->foreign('outfit_id')
                     ->references('id')
                     ->on('outfits')
                     ->onDelete('no action')
-                    ->onUpdate('cascade')
-                    ->nullable();
+                    ->onUpdate('cascade');
 
             $table->unsignedBigInteger('user_id'); 
             $table->foreign('user_id')

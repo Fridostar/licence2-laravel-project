@@ -16,6 +16,7 @@
                 <div class="d-flex justify-content-center">
                     <form method="POST" action="{{ route('doLogin') }}" class="row g-3">
                         @csrf
+                        <input name="modal" value="false" type="text" hidden>
                         <div class="col-lg-12 mb-3">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Adresse mail :</label>

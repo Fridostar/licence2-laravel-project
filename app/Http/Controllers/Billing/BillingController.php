@@ -14,23 +14,6 @@ class BillingController extends Controller
     public function useFedapay()
     {
         $fedapayService = new FedapayService();
-        return $fedapayService->useWebhook();
-    }
-
-    /**
-     * USE FEDAPAY WEBHOOK FOR PURCHASES TRANSACTIONS
-     */
-    public function useCheckoutJs()
-    {
-        // 
-    }
-
-    /**
-     * USE FEDAPAY WEBHOOK FOR PURCHASES TRANSACTIONS
-     */
-    public function useCheckoutForm(Request $request)
-    {
-        // dd($request->all());
-        return view('example');
+        return $fedapayService->useCheckout();
     }
 }
