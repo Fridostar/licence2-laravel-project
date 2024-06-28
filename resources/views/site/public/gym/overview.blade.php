@@ -142,7 +142,7 @@
         transUserEmail, transUserLastname, transUserFirstname
     ) {
         let widget = FedaPay.init({
-            public_key: 'pk_sandbox_sqZQ7mDXl4gnj_lOM6CXyx-a',
+            public_key: '<?php echo (env('FEDAPAY_PUBLIC_KEY')) ?>',
             transaction: {
                 amount: transAmount,
                 description: 'Acheter mon produit',

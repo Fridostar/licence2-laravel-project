@@ -36,9 +36,9 @@ class FedapayService
                 $amountTtc = $transInfo->amount_debited,
                 $option = $transInfo->custom_metadata->option,
                 $status = $transInfo->status,
-                $pricingId = $transInfo->custom_metadata->pricing_id,
+                $pricingId = 1,
                 $roomId = $transInfo->custom_metadata->room_id,
-                $outfitId = $transInfo->custom_metadata->outfit_id,
+                $outfitId = 1,
                 $userId = $transInfo->custom_metadata->user_id
             );
         }

@@ -71,11 +71,11 @@ class BillingService
             );
 
             // 4.. send mail the customer
-            $mailService->sendNewSubscriptionMailToCustomer(
-                $customer,
-                $transaction,
-                $subscription
-            );
+            // $mailService->sendNewSubscriptionMailToCustomer(
+            //     $customer,
+            //     $transaction,
+            //     $subscription
+            // );
 
             // echo "Assouka Subscription, SUCCESS !";
         }
