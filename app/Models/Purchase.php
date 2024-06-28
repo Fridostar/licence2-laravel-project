@@ -15,7 +15,6 @@ class Purchase extends Model
         'outfit_quantity',
         'status',
         'transaction_id',
-        'pricing_id',
         'outfit_id',
         'user_id',
     ];
@@ -24,11 +23,6 @@ class Purchase extends Model
     public function transaction(): BelongsTo
     {
         return $this->belongsTo(Transaction::class);
-    }
-    
-    public function pricing(): BelongsTo
-    {
-        return $this->belongsTo(Pricing::class);
     }
 
     public function outfit(): BelongsTo

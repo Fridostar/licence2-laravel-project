@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Http\Controllers\Billing\PurchaseController;
 use App\Http\Controllers\Billing\SubscriptionController;
 use App\Http\Controllers\Billing\TransactionController;
+use App\Models\Outfit;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -14,11 +16,11 @@ class BillingService
         $reference,
         $amount,
         $amountTtc,
-        $option,
         $status,
+        $option,
         $pricingId,
-        $roomId,
-        $outfitId,
+        $roomId = null,
+        $outfitId = null,
         $userId
     ) {
         $mailService = new MailService();
@@ -26,67 +28,61 @@ class BillingService
         $purchaseController = new PurchaseController();
         $subscriptionController = new SubscriptionController();
 
-        DB::beginTransaction();
-        // get customer info
-        $customer = User::find($userId);
+        // DB::beginTransaction();
+        $check = Transaction::where('reference', $reference)->first();
 
-        $transaction = $transactionController->store(
-            $reference,
-            $amount,
-            $amountTtc,
-            $option,
-            $status,
-            $pricingId,
-            $roomId,
-            $outfitId,
-            $userId
-        );
-
-        if ($option == 'purchase') {
-            // create purchase for user
-            $purchase = $purchaseController->store(
-                $transaction->id,
+        if(!$check) {
+            $transaction = $transactionController->store(
+                $reference,
                 $amount,
-                $pricingId,
-                $outfitId,
-                $userId,
-            );
-
-            // 2. send mail the customer
-            $mailService->sendNewPurchaseMailToCustomer(
-                $customer,
-                $transaction,
-                $purchase
-            );
-
-            // echo "Assouka Numeric Purchase, SUCCESS !";
-        } else {
-            // create subscription for user
-            $subscription = $subscriptionController->store(
-                $transaction->id,
-                $amount,
+                $amountTtc,
+                $option,
+                $status,
                 $pricingId,
                 $roomId,
-                $userId,
+                $outfitId,
+                $userId
             );
+            
+            // get customer info
+            $customer = User::find($transaction->user_id);
 
-            // 4.. send mail the customer
-            // $mailService->sendNewSubscriptionMailToCustomer(
-            //     $customer,
-            //     $transaction,
-            //     $subscription
-            // );
-
-            // echo "Assouka Subscription, SUCCESS !";
+            if ($transaction->option === "purchase") {
+                // create purchase for user
+                $purchase = $purchaseController->store(
+                    $transaction->id,
+                    $transaction->amount,
+                    $transaction->pricing_id,
+                    $transaction->outfit_id,
+                    $transaction->user_id,
+                );
+    
+                // 2. send mail the customer
+                $mailService->sendNewPurchaseMailToCustomer(
+                    $customer,
+                    $transaction,
+                    Outfit::find($transaction->outfit_id),
+                );
+    
+                // echo "Assouka Numeric Purchase, SUCCESS !";
+            } else if($transaction->option === "subscription"){
+                // create subscription for user
+                $subscription = $subscriptionController->store(
+                    $transaction->id,
+                    $transaction->amount,
+                    $transaction->pricing_id,
+                    $transaction->room_id,
+                    $transaction->user_id,
+                );
+    
+                // 4.. send mail the customer
+                $mailService->sendNewSubscriptionMailToCustomer(
+                    $customer,
+                    $transaction,
+                    $subscription
+                );
+            }
         }
-        DB::commit();
-
-        return [
-            'customerInfo' => $customer,
-            'transactionInfo' => [
-                'amountTTC' => $amountTtc,
-                'option' => $option,
-            ],
-        ];
+        // DB::commit();
     }
 }

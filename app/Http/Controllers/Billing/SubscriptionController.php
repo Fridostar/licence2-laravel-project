@@ -30,14 +30,20 @@ class SubscriptionController extends Controller
     public function store(
         $transactionId,
         $transactionAmount,
-        $transactionPricingId,
-        $transactionRoomId,
+        $transactionPricingId = null,
+        $transactionRoomId = null,
         $transactionUserId,
     )
     {
-        DB::beginTransaction();
-        $pricing = Pricing::find($transactionPricingId);
-        $expiration = now()->addDays($pricing->duration);
+        // DB::beginTransaction();
+        // managers subscriptions
+        $expiration = now()->addDays(365);
+
+        // rooms subscriptions
+        if(isset($transactionPricingId)) {
+            $pricing = Pricing::find($transactionPricingId);
+            $expiration = now()->addDays($pricing->duration);
+        }
 
         $subscription = Subscription::create([
             'transaction_id' => $transactionId,
@@ -55,7 +61,7 @@ class SubscriptionController extends Controller
         ]);
         
         return $subscription;
-        DB::commit();
+        // DB::commit();
     }
 
     /**

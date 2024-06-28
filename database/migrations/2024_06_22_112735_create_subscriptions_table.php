@@ -24,19 +24,16 @@ return new class extends Migration
                 ->onDelete('no action')
                 ->onUpdate('cascade');
 
-            $table->unsignedBigInteger('pricing_id');
-            $table->foreign('pricing_id')
-                ->references('id')
-                ->on('pricings')
-                ->onDelete('no action')
-                ->onUpdate('cascade');
-
-            $table->unsignedBigInteger('room_id')->nullable();
-            $table->foreign('room_id')
-                ->references('id')
-                ->on('rooms')
-                ->onDelete('no action')
-                ->onUpdate('cascade');
+            $table->foreignId('pricing_id')->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('set null');
+                
+            $table->foreignId('room_id')->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('set null');
+                
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')

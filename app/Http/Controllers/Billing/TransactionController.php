@@ -19,14 +19,14 @@ class TransactionController extends Controller
         $transactionAmountTtc,
         $transactionOption,
         $transactionStatus,
-        $transactionPricing,
+        $transactionPricing = null,
         $transactionRoomId = null,
         $transactionOutfitId = null,
         $transactionUserId,
     ) {
         // save the transaction
-        DB::beginTransaction();
-            return Transaction::create([
+        // DB::beginTransaction();
+            $transaction = Transaction::create([
                 "reference" => $transactionReference,
                 "amount" => $transactionAmount,
                 "amount_ttc" => $transactionAmountTtc,
@@ -37,6 +37,8 @@ class TransactionController extends Controller
                 "outfit_id" => $transactionOutfitId,
                 "user_id" => $transactionUserId,
             ]);
-        DB::commit();
+            
+            return $transaction;
+        // DB::commit();
     }
 }

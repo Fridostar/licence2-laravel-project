@@ -26,20 +26,24 @@ class FedapayService
 
     public function useCheckout()
     {
-        $transInfo = json_decode($_COOKIE['approuvedTransaction']);
+        if (isset($_COOKIE['approuvedTransaction'])) {
+            $transInfo = json_decode($_COOKIE['approuvedTransaction']);
 
-        if (isset($transInfo)) {
+            ($transInfo->custom_metadata->room_id === "null") ? $sentRoomId = null : $sentRoomId = intval($transInfo->custom_metadata->room_id);
+            ($transInfo->custom_metadata->outfit_id === "null") ? $sentOutfitId = null : $sentOutfitId = intval($transInfo->custom_metadata->outfit_id);
+            ($transInfo->custom_metadata->pricing_id === "null") ? $sentPricingId = null : $sentPricingId = intval($transInfo->custom_metadata->pricing_id);
+            
             $digitpayService = new BillingService();
             $digitpayService->todoAfterSuccessTransaction(
                 $reference = $transInfo->reference,
                 $amount = $transInfo->amount,
                 $amountTtc = $transInfo->amount_debited,
-                $option = $transInfo->custom_metadata->option,
                 $status = $transInfo->status,
-                $pricingId = 1,
-                $roomId = $transInfo->custom_metadata->room_id,
-                $outfitId = 1,
-                $userId = $transInfo->custom_metadata->user_id
+                $option = $transInfo->custom_metadata->option,
+                $pricingId =  $sentPricingId,
+                $roomId = $sentRoomId,
+                $outfitId = $sentOutfitId,
+                $userId = intval($transInfo->custom_metadata->user_id)
             );
         }
     }

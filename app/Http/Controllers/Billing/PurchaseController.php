@@ -34,21 +34,15 @@ class PurchaseController extends Controller
         $transactionUserId,
     )
     {
-        try {
-            DB::beginTransaction();
-                Purchase::create([
-                    'transaction_id' => $transactionId,
-                    'amount' => $transactionAmount,
-                    'pricing_id' => $transactionPricing,
-                    'outfit_id' => $transactionOutfitId,
-                    'user_id' => $transactionUserId,
-                ]);
-            DB::commit();
-
-            // return $this->respondCreatedOrUpdated($model);
-        } catch (\Exception $e) {
-            $e->getMessage();
-        }
+        // DB::beginTransaction();
+        Purchase::create([
+            'transaction_id' => $transactionId,
+            'amount' => $transactionAmount,
+            'pricing_id' => $transactionPricing,
+            'outfit_id' => $transactionOutfitId,
+            'user_id' => $transactionUserId,
+        ]);
+        // DB::commit();
     }
 
     /**

@@ -24,13 +24,6 @@ return new class extends Migration
                 ->onDelete('no action')
                 ->onUpdate('cascade');
 
-            $table->unsignedBigInteger('pricing_id');
-            $table->foreign('pricing_id')
-                ->references('id')
-                ->on('pricings')
-                ->onDelete('no action')
-                ->onUpdate('cascade');
-
             $table->unsignedBigInteger('outfit_id');
             $table->foreign('outfit_id')
                 ->references('id')

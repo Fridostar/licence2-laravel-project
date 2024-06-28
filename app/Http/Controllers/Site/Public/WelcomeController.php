@@ -48,6 +48,7 @@ class WelcomeController extends Controller
             $outfits = $room->outfits()->orderBy('id', 'desc')->paginate(3);
         }
 
+        // execute the fedapay callback action
         $fedapayService = new FedapayService();
         $fedapayService->useCheckout();
 

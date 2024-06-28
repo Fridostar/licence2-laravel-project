@@ -26,16 +26,16 @@
                                         <div class="d-flex justify-content-center">
                                             @foreach($room->pricings as $pricing)
                                             <div class="col-lg-3 mx-3">
-                                                <button onclick="payement( 
+                                                <button onclick="payement(
+                                                        '<?php echo ($pricing->price); ?>', 
+                                                        '<?php echo ($authenticatedUser->email); ?>', 
+                                                        '<?php echo ($authenticatedUser->last_name); ?>', 
+                                                        '<?php echo ($authenticatedUser->first_name); ?>',
                                                         'subscription',
-                                                        '<?php echo ($pricing->id) ?>',
-                                                        '<?php echo ($room->id) ?>',
-                                                        'null',
-                                                        '<?php echo ($authenticatedUser->id) ?>',
-                                                        '<?php echo ($pricing->price) ?>', 
-                                                        '<?php echo ($authenticatedUser->email) ?>', 
-                                                        '<?php echo ($authenticatedUser->last_name) ?>', 
-                                                        '<?php echo ($authenticatedUser->first_name) ?>'
+                                                        '<?php echo ($authenticatedUser->id); ?>',
+                                                        '<?php echo ($pricing->id); ?>',
+                                                        '<?php echo ($room->id); ?>',
+                                                        'null'
                                                     )" class="btn btn-outline-primary">
                                                     Payer {{ $pricing->price }} FCFA
                                                 </button>
@@ -103,7 +103,24 @@
                                 </div>
                             </div>
 
-                            <button type="button" class="btn btn-outline-primary mt-3 w-100" data-bs-toggle="modal" data-bs-target="">Acheter</button>
+                            @auth
+                            <!-- make new purchase -->
+                            <button onclick="payement(
+                                    '<?php echo ($outfit->sale_price); ?>',
+                                    '<?php echo ($authenticatedUser->email); ?>', 
+                                    '<?php echo ($authenticatedUser->last_name); ?>', 
+                                    '<?php echo ($authenticatedUser->first_name); ?>',
+                                    'purchase',
+                                    '<?php echo ($authenticatedUser->id); ?>',
+                                    'null',
+                                    'null',
+                                    '<?php echo ($outfit->id); ?>',
+                                )" type="button" class="btn btn-outline-primary mt-3 w-100">
+                                Acheter à {{ $outfit->sale_price }} FCFA
+                            </button>
+                            @else
+                            <button type="button" class="btn btn-outline-primary mt-3 w-100" data-bs-toggle="modal" data-bs-target="#loginModal">M'enre gister à la salle</button>
+                            @endauth
                         </div>
                     </div>
 
@@ -122,52 +139,3 @@
 </section>
 
 @endsection
-
-
-@push('script')
-<script type="text/javascript">
-    function setCookie(name, value, days) {
-        var expires = "";
-
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    }
-
-    function payement(
-        option, pricingId, roomId, outfitId, userId, transAmount, 
-        transUserEmail, transUserLastname, transUserFirstname
-    ) {
-        let widget = FedaPay.init({
-            public_key: '<?php echo (env('FEDAPAY_PUBLIC_KEY')) ?>',
-            transaction: {
-                amount: transAmount,
-                description: 'Acheter mon produit',
-                custom_metadata: {
-                    "option": option,
-                    "pricing_id": pricingId,
-                    "room_id": roomId,
-                    "outfit_id": outfitId,
-                    "user_id": userId,
-                },
-            },
-            customer: {
-                email: transUserEmail,
-                lastname: transUserLastname,
-                firstname: transUserFirstname,
-            },
-            onComplete(response) {
-                if (response.transaction.status === "approved") {
-                    setCookie('approuvedTransaction', JSON.stringify(response.transaction), 1)
-                    // localStorage.setItem('transaction', JSON.stringify(response.transaction));
-                }
-            }
-        });
-        
-        widget.open();
-    }
-</script>
-@endpush('script')

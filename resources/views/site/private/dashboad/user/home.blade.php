@@ -1,62 +1,123 @@
 @extends('layouts.dash')
 
-@section('title', 'Mon compte')
+@section('title', 'Dashboad')
+@section('headerTitle', 'MON COMPTE')
 
 @section('content')
-<div class="row ">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+<div class="container-fluid">
+    <div class="card-header bg-light mb-5">
+        <div class="col-lg-3">
+            <button href="" type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#showBecomeManagerModal">Devenir menbre</button>
+            @include('site.private.dashboad.user.modals.become-manager-modal')
+        </div>
+    </div>
 
-                        <div class="table">
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">N°</th>
-                                            <th class="text-center">Type d'abonnement</th>
-                                            <th class="text-center">Date d'abonnement</th>
-                                            <th class="text-center">Période d'abonnement</th>
-                                            <th class="text-center">Expiration</th>
-                                            <th class="text-center">Jours restant</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th class="text-center">1</th>
-                                            <td class="text-center">Mensuel</td>
-                                            <td class="text-center"> 04/04/2024</td>
-                                            <td class="text-center">04/04/2024-04/04/2024 </td>
-                                            <td class="text-center">04/04/2024</td>
-                                            <td class="text-center">0M 4J 5MN 3S</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center">2</th>
-                                            <td class="text-center">Mensuel</td>
-                                            <td class="text-center"> 04/04/2024</td>
-                                            <td class="text-center">04/04/2024-04/04/2024 </td>
-                                            <td class="text-center">04/04/2024</td>
-                                            <td class="text-center">0M 4J 5MN 3S</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center">3</th>
-                                            <td class="text-center">Mensuel</td>
-                                            <td class="text-center"> 04/04/2024</td>
-                                            <td class="text-center">04/04/2024-04/04/2024 </td>
-                                            <td class="text-center">04/04/2024</td>
-                                            <td class="text-center">0M 4J 5MN 3S</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+    <div class="col-lg-12">
+        <!-- <div class="d-flex gap-4"> -->
+        <!-- show information about subscription -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Mon abonnement</h5>
+            </div>
+            <div class="card-body">
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore in nemo omnis accusamus deserunt minus eveniet maiores itaque a quasi officiis, optio blanditiis voluptate. Voluptatum veniam delectus non eum suscipit?</p>
+
+                <div class="table">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-responsive-sm">
+                            <thead>
+                                <tr>
+                                    <th class="text-start">#</th>
+                                    <th class="text-start">Nom</th>
+                                    <th class="text-start">Validité</th>
+                                    <th class="text-start">Salle</th>
+                                    <th class="text-start">Créer le</th>
+                                    <th class="text-end"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($subscriptionList as $subscription)
+                                <tr>
+                                    <td class="text-start"></td>
+                                    <td class="text-start">{{ $subscription->pricing->name }}</td>
+                                    <td class="text-start">{{ $subscription->pricing->duration }} jours</td>
+                                    <td class="text-start">{{ $subscription->room->name }} jours</td>
+                                    <td class="text-start">@include('shared.format.date', ['value' => $subscription->created_at])</td>
+                                    <td class="text-end">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showSubscriptionDetailsModal">Consulter</button>
+                                    </td>
+                                </tr>
+
+                                <!-- showSubscriptionDetailsModal modal -->
+                                @include('site.private.dashboad.user.modals.show-subscription-details-modal')
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-
         </div>
+
+        <!-- show information about purchase -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Mes achats</h5>
+            </div>
+            <div class="card-body">
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore in nemo omnis accusamus deserunt minus eveniet maiores itaque a quasi officiis, optio blanditiis voluptate. Voluptatum veniam delectus non eum suscipit?</p>
+
+                <div class="table">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-responsive-sm">
+                            <thead>
+                                <tr>
+                                    <th class="text-start">#</th>
+                                    <th class="text-start">Equipement acheté</th>
+                                    <th class="text-start">Prix</th>
+                                    <th class="text-start">Status de l'achat</th>
+                                    <th class="text-start">Créer le</th>
+                                    <th class="text-end"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($purchasesList as $purchase)
+                                <tr>
+                                    <td class="text-start"></td>
+                                    <td class="text-start">{{ $purchase->outfit->name }}</td>
+                                    <td class="text-start">@include('shared.format.price', ['value' => $purchase->amount])
+                                    </td>
+                                    <td class="text-start">
+                                        @switch($purchase->status)
+                                            @case('completed')
+                                            <span class="badge rounded-pill bg-success">Déjà livré</span>
+                                            @break
+
+                                            @case('failed')
+                                            <span class="badge rounded-pill bg-danger">Annuler</span>
+                                            @break
+                                            
+                                            @default
+                                            <span class="badge rounded-pill bg-warning text-dark">En attente</span>
+                                        @endswitch
+                                    </td>
+                                    <td class="text-start">@include('shared.format.date', ['value' => $purchase->created_at])</td>
+                                    <td class="text-end">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showPurchaseDetailsModal">Consulter</button>
+                                    </td>
+                                </tr>
+
+                                <!-- showSubscriptionDetailsModal modal -->
+                                @include('site.private.dashboad.user.modals.show-purchase-details-modal')
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
     </div>
 </div>
 @endsection

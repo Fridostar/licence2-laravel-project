@@ -18,6 +18,8 @@
     <link href="{{ asset('template/dashboad/vendor/jquery-nice-select/css/nice-select.css') }}" rel="stylesheet">
     <link href="{{ asset('template/dashboad/css/style.css') }}" rel="stylesheet">
 
+    <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
+    
     @stack('style')
     
     <!-- Scripts -->
@@ -69,6 +71,54 @@
     <script src="{{ asset('template/dashboad/js/demo.js') }}"></script>
     <script src="{{ asset('template/dashboad/js/styleSwitcher.js') }}"></script>
 
+
+
+<script type="text/javascript">
+    function setCookie(name, value, delay) {
+        var expires = "";
+
+        if (delay) {
+            var date = new Date();
+            date.setTime(date.getTime() + (delay * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    function payement(
+        transAmount, transUserEmail, transUserLastname, transUserFirstname,
+        option, userId, pricingId, roomId, outfitId
+    ) {
+        let widget = FedaPay.init({
+            public_key: '<?php echo (env('FEDAPAY_PUBLIC_KEY')); ?>',
+            transaction: {
+                amount: transAmount,
+                description: 'Acheter mon produit',
+                custom_metadata: {
+                    "option": option,
+                    "pricing_id": pricingId,
+                    "room_id": roomId,
+                    "outfit_id": outfitId,
+                    "user_id": userId,
+                },
+            },
+            customer: {
+                email: transUserEmail,
+                lastname: transUserLastname,
+                firstname: transUserFirstname,
+            },
+            onComplete(response) {
+                if (response.transaction.status === "approved") {
+                    setCookie('approuvedTransaction', JSON.stringify(response.transaction), 1)
+                    // localStorage.setItem('transaction', JSON.stringify(response.transaction));
+                    location.reload();
+                }
+            }
+        });
+
+        widget.open();
+    }
+</script>
     @stack('script')
 </body>
 
