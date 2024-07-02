@@ -69,8 +69,8 @@ class DatabaseSeeder extends Seeder
             Pricing::create($item);
         }
 
-        User::factory(13)->create();
-        Outfit::factory(70)->create();
-        Room::factory(20)->create();
+        // User::factory(13)->create();
+        // Outfit::factory(70)->create();
+        // Room::factory(20)->create();
     }
 }

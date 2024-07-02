@@ -42,15 +42,14 @@ Route::get('rooms/{id}/subscription', [WelcomeController::class, 'subscription']
 /* monetisation */
 Route::get('fedapay/checkout', [BillingController::class, 'useFedapay'])->name('fedapay.checkout');
 
-// application protected routes
-Route::middleware(['auth',])->group(function () {
-    // actions that only admin and manager can do
-    Route::middleware([AdminMiddleware::class, ManagerMiddleware::class])
-        ->prefix('private')->name('management.')->group(function () {
+// actions that only admin and manager can do
+Route::middleware([AdminMiddleware::class, ManagerMiddleware::class])
+    ->prefix('private')->name('management.')->group(
+        function () {
             Route::resource('/management/pricing', PricingController::class);
             Route::resource('/management/outfit', OutfitController::class);
             Route::resource('/management/room', RoomController::class);
-            
+
             // purchases
             Route::get('purchases', [PurchaseController::class, 'index']);
             Route::get('purchases/{id}', [PurchaseController::class, 'show']);
@@ -61,22 +60,24 @@ Route::middleware(['auth',])->group(function () {
         }
     );
 
-    // actions that only user-role can do
-    Route::middleware(UserMiddleware::class)->group(function () {
-        Route::get('user/dashboard', [UserDashboardController::class, 'home'])->name('user.dashboad');
-        Route::get('user/purchase', [UserDashboardController::class, 'home'])->name('user.purchase');
-        Route::get('user/subscription', [UserDashboardController::class, 'home'])->name('user.subscription');
-    });
+// actions that only user-role can do
+Route::middleware(UserMiddleware::class)->group(function () {
+    Route::get('user/dashboard', [UserDashboardController::class, 'home'])->name('user.dashboad');
+    Route::get('user/purchase', [UserDashboardController::class, 'home'])->name('user.purchase');
+    Route::get('user/subscription', [UserDashboardController::class, 'home'])->name('user.subscription');
+});
 
-    // actions that only manager-role can do
-    Route::middleware(ManagerMiddleware::class)->group(function () {
-        Route::get('manager/dashboard', [ManagerDashboardController::class, 'home'])->name('manager.dashboad');
-    });
+// actions that only manager-role can do
+Route::middleware(ManagerMiddleware::class)->group(function () {
+    Route::get('manager/dashboard', [ManagerDashboardController::class, 'home'])->name('manager.dashboad');
+});
 
-    // actions that only admin-role can do
-    Route::middleware(AdminMiddleware::class)->group(function () {
-        Route::get('admin/dashboard', [AdminDashboardController::class, 'home'])->name('admin.dashboad');
-    });
+// actions that only admin-role can do
+Route::middleware(AdminMiddleware::class)->group(function () {
+    Route::get('admin/dashboard', [AdminDashboardController::class, 'home'])->name('admin.dashboad');
+});
 
+// application protected routes
+Route::middleware(['auth',])->group(function () {
     Route::post('/auth/logout', [LoginController::class, 'destroy'])->name('logout');
 });
