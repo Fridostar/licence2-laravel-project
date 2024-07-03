@@ -37,7 +37,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($subscriptionList as $subscription)
+                                @foreach ($roomSubscriptionList as $subscription)
                                 <tr>
                                     <td class="text-start"></td>
                                     <td class="text-start">{{ $subscription->pricing->name }}</td>

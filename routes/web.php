@@ -14,6 +14,7 @@ use App\Http\Controllers\Site\Private\OutfitController;
 use App\Http\Controllers\Site\Private\PricingController;
 use App\Http\Controllers\Site\Private\RoomController;
 use App\Http\Controllers\Site\Public\WelcomeController;
+use App\Http\Middleware\AdminManagerMiddleware;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ManagerMiddleware;
 use App\Http\Middleware\UserMiddleware;
@@ -43,22 +44,20 @@ Route::get('rooms/{id}/subscription', [WelcomeController::class, 'subscription']
 Route::get('fedapay/checkout', [BillingController::class, 'useFedapay'])->name('fedapay.checkout');
 
 // actions that only admin and manager can do
-Route::middleware([AdminMiddleware::class, ManagerMiddleware::class])
-    ->prefix('private')->name('management.')->group(
-        function () {
-            Route::resource('/management/pricing', PricingController::class);
-            Route::resource('/management/outfit', OutfitController::class);
-            Route::resource('/management/room', RoomController::class);
+Route::middleware(AdminManagerMiddleware::class)->prefix('private')->name('management.')->group(
+    function () {
+        Route::resource('/management/outfit', OutfitController::class);
+        Route::resource('/management/room', RoomController::class);
 
-            // purchases
-            Route::get('purchases', [PurchaseController::class, 'index']);
-            Route::get('purchases/{id}', [PurchaseController::class, 'show']);
+        // purchases
+        Route::get('purchases', [PurchaseController::class, 'index']);
+        Route::get('purchases/{id}', [PurchaseController::class, 'show']);
 
-            // subscriptions
-            Route::get('subscriptions', [SubscriptionController::class, 'index']);
-            Route::get('subscriptions/{id}', [SubscriptionController::class, 'show']);
-        }
-    );
+        // subscriptions
+        Route::get('subscriptions', [SubscriptionController::class, 'index']);
+        Route::get('subscriptions/{id}', [SubscriptionController::class, 'show']);
+    }
+);
 
 // actions that only user-role can do
 Route::middleware(UserMiddleware::class)->group(function () {
@@ -74,6 +73,10 @@ Route::middleware(ManagerMiddleware::class)->group(function () {
 
 // actions that only admin-role can do
 Route::middleware(AdminMiddleware::class)->group(function () {
+    Route::prefix('private')->name('management.')->group(function() {
+        Route::resource('/management/pricing', PricingController::class);
+    });
+
     Route::get('admin/dashboard', [AdminDashboardController::class, 'home'])->name('admin.dashboad');
 });
 

@@ -18,7 +18,8 @@ class UserDashboardController extends Controller
 
         return view('site.private.dashboad.user.home', [
             'purchasesList' => $user->purchases,
-            'subscriptionList' => $user->subscriptions,
+            'roomSubscriptionList' => $user->roomSubscriptions,
+            // 'becomeManagerSubscriptionList' => $user->becomeManagerSubscriptions,
         ]);
     }
 }

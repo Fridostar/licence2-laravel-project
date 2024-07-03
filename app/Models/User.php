@@ -69,9 +69,25 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Subscription::class, 'user_id')->where('status', true);
     }
 
-    public function subscriptions(): HasMany
+    public function becomeManagerSubscriptions()
     {
-        return $this->hasMany(Subscription::class);
+        return $this->belongsToMany(Subscription::class, 'user_id')
+            ->where('pricing_id', null)
+            ->where('room_id', null)
+            ->where('status', true);
+    }
+
+    // public function subscriptions(): HasMany
+    // {
+    //     return $this->hasMany(Subscription::class);
+    // }
+
+    public function roomSubscriptions(): HasMany
+    {
+        return $this->HasMany(Subscription::class, 'user_id')
+            ->whereNotNull('pricing_id')
+            ->whereNotNull('room_id')
+            ->where('status', true);
     }
 
     public function purchases(): HasMany
