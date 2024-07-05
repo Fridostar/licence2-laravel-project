@@ -29,3 +29,5 @@ class OutfitFactory extends Factory
         ];
     }
 }
+
+

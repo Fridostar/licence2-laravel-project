@@ -14,7 +14,20 @@ class UserDashboardController extends Controller
 
         // execute the fedapay callback action
         $fedapayService = new FedapayService();
-        $fedapayService->useCheckout();
+        $subscription = $fedapayService->useCheckout();
+
+        // update user role to "manager"
+        if($subscription == 'isManager') {
+            // $user->role = 'manager';
+            // $user->save();
+
+            $user->update([
+                'role' => 'manager',
+            ]);
+
+            return redirect()->route('manager.dashboad');
+        }
+
 
         return view('site.private.dashboad.user.home', [
             'purchasesList' => $user->purchases,

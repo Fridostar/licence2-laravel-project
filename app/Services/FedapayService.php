@@ -45,6 +45,10 @@ class FedapayService
                 $outfitId = $sentOutfitId,
                 $userId = intval($transInfo->custom_metadata->user_id)
             );
+
+            if($sentRoomId = null && $sentOutfitId = null && $sentPricingId = null) {
+                return 'isManager';
+            }
         }
     }
 }
