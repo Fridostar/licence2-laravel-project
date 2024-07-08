@@ -77,10 +77,10 @@ class User extends Authenticatable implements MustVerifyEmail
             ->where('status', true);
     }
 
-    // public function subscriptions(): HasMany
-    // {
-    //     return $this->hasMany(Subscription::class);
-    // }
+    public function subscriptions(): HasMany
+    {
+        return $this->hasMany(Subscription::class);
+    }
 
     public function roomSubscriptions(): HasMany
     {

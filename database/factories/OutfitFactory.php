@@ -23,7 +23,7 @@ class OutfitFactory extends Factory
             'name' => fake()->words(3, true),
             'description' => fake()->text(),
             'sale_price' => fake()->randomNumber(),
-            'cover_image' => fake()->imageUrl(),
+            'cover_image' => 'media/outfits/default_outfit.jpg',
             'status' => fake()->boolean(),
             'user_id'  => fake()->randomElement($managers->pluck('id')),
         ];

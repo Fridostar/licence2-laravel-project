@@ -3,20 +3,52 @@
 namespace App\Http\Controllers\Billing;
 
 use App\Http\Controllers\Controller;
+use App\Models\Outfit;
 use App\Models\Purchase;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PurchaseController extends Controller
 {
+    public $authenticatedUser;
+
+    /**
+     * 
+     */
+    public function __construct()
+    {
+        $this->authenticatedUser = Auth::user();
+    }
+    
     /**
      * 
      */
     public function index()
-    {
+    { 
         try {
+            if ($this->authenticatedUser->role == "admin") {
+                // list of purchases// list of purchases
+                $allOutfits = Outfit::pluck('id');
+                $purchasesList = Purchase::whereIn('outfit_id', $allOutfits)->get();
+
+                // list of purchasers
+                $ids = Purchase::pluck('user_id');
+                $purchasersList = User::whereIn('id', $ids)->get();
+            } else {
+                // list of purchases
+                $outfitsAddByManagerID = Outfit::addedByManager($this->authenticatedUser->id)->pluck('id');
+                $purchasesList = Purchase::whereIn('outfit_id', $outfitsAddByManagerID)->get();
+
+                // list of purchasers
+                $ids = Purchase::whereIn('outfit_id', $outfitsAddByManagerID)->pluck('user_id');
+                $purchasersList = User::whereIn('id', $ids)->get();
+            }
+
             return view('site.private.purchase.index', [
-                "purchaseList" => Purchase::orderBy('created_at', 'desc')->paginate()
+                "purchasesList" => $purchasesList,
+                "purchasersList" => $purchasersList,
             ]);
         } catch (\Exception $e) {
             return $e->getMessage();

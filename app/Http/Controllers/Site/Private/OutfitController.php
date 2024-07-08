@@ -13,6 +13,7 @@ class OutfitController extends Controller
 {   
     public $fileService;
     public $authenticatedUser;
+    public $fileStoragePath = "outfits";
 
     /**
      * 
@@ -87,7 +88,7 @@ class OutfitController extends Controller
 
             // add image and update coverImageUrl in database
             $outfit->update([
-                'cover_image' => $this->fileService->upload($validatedData['cover_image'], $outfit->id),
+                'cover_image' => $this->fileService->upload($validatedData['cover_image'], $this->fileStoragePath, "outfit_{$outfit->id}_cover_image"),
             ]);
 
             toast("Nouvel équipement ajouté avec succes", 'success');
@@ -125,16 +126,22 @@ class OutfitController extends Controller
         try{
             $outfit = Outfit::find($id);
 
+            // fetch the old image path
+            $newCoverImage = $outfit->cover_image;
+
+            // if coverImage is set in the request inputs
             if (isset($request['cover_image'])) {
-                $outfit->update([
-                    'cover_image' => $this->fileService->upload($validatedData['cover_image'], $outfit->id),
-                ]);
+                // first delete the file image
+                $this->fileService->delete($outfit->cover_image);
+                // then create the save the new image
+                $newCoverImage = $this->fileService->upload($validatedData['cover_image'], $this->fileStoragePath, "outfit_{$id}_cover_image");
             }
             
             $outfit->update([
                 'name' => $validatedData['name'],
                 'description' => $validatedData['description'],
                 'sale_price' => $validatedData['sale_price'],
+                'cover_image' => $newCoverImage,
                 'status' => $validatedData['status'],
             ]);
     
@@ -154,16 +161,16 @@ class OutfitController extends Controller
         try{
             $outfit = Outfit::find($id);
 
-            // 1. first delete the file image
+            // first delete the file image
             $this->fileService->delete($outfit->cover_image);
 
-            // 2. next delete relation between this outfit and rooms
+            // next delete relation between this outfit and rooms
             $outfit->rooms()->detach();
 
-            // 3. delete the outfit
+            // delete the outfit
             $outfit->delete();
 
-            // 4. finaly redirect with success msg
+            // finaly redirect with success msg
             toast("L'équipement à été supprimé avec succes", 'success');
             return redirect()->back();
         } catch (\Exception $e) {

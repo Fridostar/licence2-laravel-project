@@ -15,6 +15,7 @@ class RoomController extends Controller
 {
     public $fileService;
     public $authenticatedUser;
+    public $fileStoragePath = "rooms";
 
     /**
      * 
@@ -63,9 +64,17 @@ class RoomController extends Controller
 
     public function create()
     {
+        if ($this->authenticatedUser->role == "admin") {
+            // list of outfits
+            $outfitsList = Outfit::pluck('name', 'id');
+        } else {
+            // list of outfits
+            $outfitsList = Outfit::addedByManager($this->authenticatedUser->id)->pluck('name', 'id');
+        }
+
         return view('site.private.room.form', [
             'room' => new Room(),
-            'outfits' => Outfit::pluck('name', 'id'),
+            'outfits' => $outfitsList,
             'pricings' => Pricing::pluck('name', 'id'),
 
         ]);
@@ -105,8 +114,8 @@ class RoomController extends Controller
     
             // save updated image in storage & update the room images url
             $room->update([
-                'cover_image' => $this->fileService->upload($validatedData['cover_image'], $room->id),
-                'overview_image' => $this->fileService->upload($validatedData['overview_image'], $room->id),
+                'cover_image' => $this->fileService->upload($validatedData['cover_image'], $this->fileStoragePath, "room_{$room->id}_cover_image"),
+                'overview_image' => $this->fileService->upload($validatedData['overview_image'], $this->fileStoragePath, "room_{$room->id}_overview_image"),
             ]);
     
             // finaly redirect with success msg
@@ -127,9 +136,17 @@ class RoomController extends Controller
 
     public function edit($id)
     {
+        if ($this->authenticatedUser->role == "admin") {
+            // list of outfits
+            $outfitsList = Outfit::pluck('name', 'id');
+        } else {
+            // list of outfits
+            $outfitsList = Outfit::addedByManager($this->authenticatedUser->id)->pluck('name', 'id');
+        }
+
         return view('site.private.room.form', [
             'room' => Room::find($id),
-            'outfits' => Outfit::pluck('name', 'id'),
+            'outfits' => $outfitsList,
             'pricings' => Pricing::pluck('name', 'id'),
         ]);
     }
@@ -156,18 +173,24 @@ class RoomController extends Controller
             $room->outfits()->sync($validatedData['outfits']);
             $room->pricings()->sync($validatedData['pricings']);
 
-            // if coverImage is set, then update
+            // fetch the old image path
+            $newCoverImage = $room->cover_image;
+            $newOverviewImage = $room->overview_image;
+
+            // if coverImage is set in the request inputs
             if (isset($request['cover_image'])) {
-                $room->update([
-                    'cover_image' => $this->fileService->upload($request['cover_image'], $id),
-                ]);
+                // first delete the file images
+                $this->fileService->delete($room->cover_image);
+                // then create the save the new image
+                $newCoverImage = $this->fileService->upload($request['cover_image'], $this->fileStoragePath, "room_{$id}_cover_image");
             }
 
-            // if overviewImage is set, then update
+            // if overviewImage is set in the request inputs
             if (isset($request['overview_image'])) {
-                $room->update([
-                    'overview_image' => $this->fileService->upload($request['overview_image'], $id),
-                ]);
+                // first delete the file images
+                $this->fileService->delete($room->overview_image);
+                // then create the save the new image
+                $newOverviewImage = $this->fileService->upload($request['overview_image'], $this->fileStoragePath, "room_{$id}_overview_image");
             }
 
             // finaly update the reste fields
@@ -175,6 +198,8 @@ class RoomController extends Controller
                 'name' => $validatedData['name'],
                 'site_url' => $validatedData['site_url'],
                 'description' => $validatedData['description'],
+                'cover_image' => $newCoverImage,
+                'overview_image' => $newOverviewImage,
                 'status' => $validatedData['status'],
             ]);
 

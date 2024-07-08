@@ -9,6 +9,7 @@
                         <span class="nav-text">Accueil</span>
                     </a>
                 </li>
+                <hr>
                 <li>
                     <a href="{{ route('management.pricing.index') }}" aria-expanded="false">
                         <i class="fas fa-heart"></i>
@@ -25,6 +26,7 @@
                         <span class="nav-text">Accueil</span>
                     </a>
                 </li>
+                <hr>
                 
                 <!-- <li>
                     <a href="coatch.html" aria-expanded="false">
@@ -88,8 +90,15 @@
                         <span class="nav-text">Gérer les gymnases</span>
                     </a>
                 </li>
+                <hr>
                 <li>
-                    <a href="#" aria-expanded="false">
+                    <a href="{{ route('management.purchase.index') }}" aria-expanded="false">
+                        <i class="fas fa-users"></i>
+                        <span class="nav-text">Gérer les achats</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('management.subscription.index') }}" aria-expanded="false">
                         <i class="fas fa-users"></i>
                         <span class="nav-text">Gérer les abonnés</span>
                     </a>

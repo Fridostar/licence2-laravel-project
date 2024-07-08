@@ -45,7 +45,7 @@
                                     <td class="text-start">{{ $subscription->room->name }} jours</td>
                                     <td class="text-start">@include('shared.format.date', ['value' => $subscription->created_at])</td>
                                     <td class="text-end">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showSubscriptionDetailsModal">Consulter</button>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showSubscriptionDetailsModal{{$subscription->id}}">Consulter</button>
                                     </td>
                                 </tr>
 
@@ -104,7 +104,7 @@
                                     </td>
                                     <td class="text-start">@include('shared.format.date', ['value' => $purchase->created_at])</td>
                                     <td class="text-end">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showPurchaseDetailsModal">Consulter</button>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showPurchaseDetailsModal{{$purchase->id}}">Consulter</button>
                                     </td>
                                 </tr>
 

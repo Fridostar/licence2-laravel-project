@@ -23,8 +23,8 @@ class RoomFactory extends Factory
             'name' => fake()->words(5, true),
             'description' => fake()->text(),
             'site_url' => fake()->url(),
-            'cover_image' => fake()->imageUrl(),
-            'overview_image' => fake()->imageUrl(),
+            'cover_image' => 'media/rooms/default_cover.jpg',
+            'overview_image' => 'media/rooms/default_overview.jpg',
             'status' => fake()->boolean(),
             'user_id'  => fake()->randomElement($managers->pluck('id')),
         ];

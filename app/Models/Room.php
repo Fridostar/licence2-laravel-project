@@ -41,4 +41,9 @@ class Room extends Model
     {
         return $this->hasMany(Subscription::class);
     }
+
+    public function scopeAddedByManager($query, $managerId)
+    {
+        return $query->where('user_id', $managerId);
+    }
 }

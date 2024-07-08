@@ -30,4 +30,9 @@ class Outfit extends Model
     {
         return $this->belongsToMany(Room::class);
     }
+
+    public function scopeAddedByManager($query, $managerId)
+    {
+        return $query->where('user_id', $managerId);
+    }
 }

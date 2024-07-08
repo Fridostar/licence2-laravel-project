@@ -4,20 +4,52 @@ namespace App\Http\Controllers\Billing;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pricing;
+use App\Models\Room;
 use App\Models\Subscription;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class SubscriptionController extends Controller
 {
+    public $authenticatedUser;
+
+    /**
+     * 
+     */
+    public function __construct()
+    {
+        $this->authenticatedUser = Auth::user();
+    }
+    
     /**
      * 
      */
     public function index()
-    {
+    { 
         try {
+            if ($this->authenticatedUser->role == "admin") {
+                // list of subscriptions
+                $allRoomsID = Room::pluck('id');
+                $subscriptionsList = Subscription::whereIn('room_id', $allRoomsID)->get();
+
+                // list of subscribers
+                $ids = Subscription::pluck('user_id');
+                $subscribersList = User::whereIn('id', $ids)->get();
+            } else {
+                // list of subscriptions
+                $roomsAddByManagerID = Room::addedByManager($this->authenticatedUser->id)->pluck('id');
+                $subscriptionsList = Subscription::whereIn('room_id', $roomsAddByManagerID)->get();
+
+                // list of subscribers
+                $ids = Subscription::whereIn('room_id', $roomsAddByManagerID)->pluck('user_id');
+                $subscribersList = User::with('subscriptions')->whereIn('id', $ids)->get();
+            }
+
+            // dd($subscribersList);
+
             return view('site.private.subscription.index', [
-                "subscriptionList" => Subscription::orderBy('created_at', 'desc')->paginate()
+                "subscriptionsList" => $subscriptionsList,
+                "subscribersList" => $subscribersList,
             ]);
         } catch (\Exception $e) {
             return $e->getMessage();

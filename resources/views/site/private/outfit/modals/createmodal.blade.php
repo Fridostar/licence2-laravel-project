@@ -24,7 +24,11 @@
 
                         <div class="row">
                             <div class="col-lg-8 mb-3">
-                                @include('shared.form.input', ['label' => "Image de couverture", 'name' => "cover_image", 'type' => "file"])
+                                <!-- @include('shared.form.input', ['label' => "Image de couverture", 'name' => "cover_image", 'type' => "file"]) -->
+                                @include('shared.form.fileimage', [
+                                    'label' => 'Image de couverture',
+                                    'name' => 'cover_image',
+                                ])
                             </div>
 
                             <div class="col-lg-4 mb-3 form-check form-switch">

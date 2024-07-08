@@ -8,7 +8,7 @@
     <div class="imgUp">
         <label for="{{ $name }}" class="form-label">{{ $label }}</label>
         <div class="imagePreview"></div>
-        <label class="btn btn-primary">
+        <label class="btn btn-load-image">
             Choisissez une image
             <input name="{{ $name }}" value="{{ old($name, $value) }}" type="file"
                 class="uploadFile img @error($name) is-invalid @enderror" id="{{ $name }}"
@@ -42,7 +42,9 @@
             box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-primary {
+        .btn-load-image {
+            background: var(--primary);
+            color: #fff;
             display: block;
             border-radius: 0px;
             box-shadow: 0px 4px 6px 2px rgba(0, 0, 0, 0.2);
@@ -85,7 +87,7 @@
     <script>
         $(".imgAdd").click(function() {
             $(this).closest(".row").find('.imgAdd').before(
-                '<div class="col-sm-2 imgUp"><div class="imagePreview"></div><label class="btn btn-primary">Choisissez une image<input type="file" class="uploadFile img" value="Upload Photo" style="width:0px;height:0px;overflow:hidden;"></label><i class="fa fa-times del"></i></div>'
+                '<div class="col-sm-2 imgUp"><div class="imagePreview"></div><label class="btn btn-load-image">Choisissez une image<input type="file" class="uploadFile img" value="Upload Photo" style="width:0px;height:0px;overflow:hidden;"></label><i class="fa fa-times del"></i></div>'
             );
         });
         $(document).on("click", "i.del", function() {

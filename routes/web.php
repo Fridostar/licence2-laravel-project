@@ -50,12 +50,12 @@ Route::middleware(AdminManagerMiddleware::class)->prefix('private')->name('manag
         Route::resource('/management/room', RoomController::class);
 
         // purchases
-        Route::get('purchases', [PurchaseController::class, 'index']);
-        Route::get('purchases/{id}', [PurchaseController::class, 'show']);
+        Route::get('purchases', [PurchaseController::class, 'index'])->name('purchase.index');
+        Route::get('purchases/{id}', [PurchaseController::class, 'show'])->name('purchase.show');
 
         // subscriptions
-        Route::get('subscriptions', [SubscriptionController::class, 'index']);
-        Route::get('subscriptions/{id}', [SubscriptionController::class, 'show']);
+        Route::get('subscriptions', [SubscriptionController::class, 'index'])->name('subscription.index');
+        Route::get('subscriptions/{id}', [SubscriptionController::class, 'show'])->name('subscription.show');
     }
 );
 

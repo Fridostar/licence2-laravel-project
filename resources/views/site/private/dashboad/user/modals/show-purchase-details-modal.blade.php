@@ -1,4 +1,4 @@
-<div class="modal fade" id="showPurchaseDetailsModal" tabindex="-1" aria-labelledby="showPurchaseDetailsModal" aria-hidden="true">
+<div class="modal fade" id="showPurchaseDetailsModal{{$purchase->id}}" tabindex="-1" aria-labelledby="showPurchaseDetailsModal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-light">
