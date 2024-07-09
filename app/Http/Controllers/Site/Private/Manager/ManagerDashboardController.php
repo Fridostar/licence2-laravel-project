@@ -35,9 +35,12 @@ class ManagerDashboardController extends Controller
         $purchasersList = User::whereIn('id', $purchIds)->get();
 
         return view('site.private.dashboad.manager.home', [
-            'informations' => null,
+            'outfitsCount' =>  $outfitsAddByManagerID->count(),
+            'roomsCount' => $roomsAddByManagerID->count(),
+
             'subscribersCount' =>  $subscribersList->count(),
             'subscriptionsCount' => $subsIds->count(),
+
             'purchasersCount' => $purchasersList->count(),
             'purchasesCount' => $purchIds->count(),
         ]);

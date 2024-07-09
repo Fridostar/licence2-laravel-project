@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Site\Private\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Outfit;
 use App\Models\Purchase;
+use App\Models\Room;
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -21,9 +23,12 @@ class AdminDashboardController extends Controller
         $purchasersList = User::whereIn('id', $ids)->get();
 
         return view('site.private.dashboad.admin.home', [
-            'informations' => null,
+            'outfitsCount' =>  Outfit::count(),
+            'roomsCount' => Room::count(),
+
             'subscribersCount' =>  $subscribersList->count(),
             'subscriptionsCount' => $subscriptionsList->count(),
+
             'purchasersCount' => $purchasersList->count(),
             'purchasesCount' => $purchasersList->count(),
         ]);
