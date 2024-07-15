@@ -20,6 +20,8 @@ class Room extends Model
         'overview_image',
         'status',
         'user_id',
+        'longitude',
+        'latitude',
     ];
 
     public function user(): BelongsTo

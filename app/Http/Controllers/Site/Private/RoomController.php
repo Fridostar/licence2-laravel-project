@@ -82,6 +82,7 @@ class RoomController extends Controller
 
     public function store(Request $request)
     {
+        dd($request);
         $validatedData = $request->validate([
             'name' => 'required|string',
             'site_url' => 'nullable|string',
@@ -91,10 +92,13 @@ class RoomController extends Controller
             'status' => ['required', Rule::in(0, 1)],
             'outfits' => 'required|array',
             'pricings' => 'required|array',
+            'longitude' => 'required',
+            'latitude' => 'required',
         ]);
 
         // dd($validatedData);
         (isset($request->site_url) == false) ? $siteUrl = 'http://127.0.0.1:8000' : $siteUrl = $validatedData['site_url'];
+        
 
         try{
             // first create the room
@@ -106,6 +110,8 @@ class RoomController extends Controller
                 'overview_image' => 'temporary_url',
                 'status' => $validatedData['status'],
                 'user_id' => Auth::user()->id,
+                'longitude' => $request->longitude,
+                'latitude' => $request->latitude
             ]);
     
             // next connect the room & pricing to outfits
@@ -117,6 +123,7 @@ class RoomController extends Controller
                 'cover_image' => $this->fileService->upload($validatedData['cover_image'], $this->fileStoragePath, "room_{$room->id}_cover_image"),
                 'overview_image' => $this->fileService->upload($validatedData['overview_image'], $this->fileStoragePath, "room_{$room->id}_overview_image"),
             ]);
+            
     
             // finaly redirect with success msg
             toast("La nouvelle salle a été ajouté avec succes", 'success');
@@ -154,6 +161,7 @@ class RoomController extends Controller
 
     public function update(Request $request, $id)
     {
+        // dd($request);
         $validatedData = $request->validate([
             'name' => 'required|string',
             'site_url' => 'nullable|string',
@@ -163,6 +171,8 @@ class RoomController extends Controller
             'status' => ['required', Rule::in(0, 1)],
             'outfits' => 'required|array',
             'pricings' => 'required|array',
+            'longitude' => 'required',
+            'latitude' => 'required',
         ]);
 
         // dd($validatedData);
@@ -201,6 +211,8 @@ class RoomController extends Controller
                 'cover_image' => $newCoverImage,
                 'overview_image' => $newOverviewImage,
                 'status' => $validatedData['status'],
+                'longitude' => $request->longitude,
+                'latitude' => $request->latitude,
             ]);
 
             toast("La salle a été mise-à-jour avec succes", 'success');

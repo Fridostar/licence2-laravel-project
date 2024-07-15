@@ -27,27 +27,27 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123')
         ]);
 
-        User::create([
-            'first_name' => 'Manager',
-            'last_name' => 'Manager',
-            'email' => 'manager@manager.com',
-            'email_verified_at' => now(),
-            'role' => 'manager',
-            'phone_number' => fake()->phoneNumber(),
-            'birth_date' => fake()->dateTimeBetween('-60 years', '-24 years'),
-            'password' => bcrypt('123')
-        ]);
+        // User::create([
+        //     'first_name' => 'Manager',
+        //     'last_name' => 'Manager',
+        //     'email' => 'manager@manager.com',
+        //     'email_verified_at' => now(),
+        //     'role' => 'manager',
+        //     'phone_number' => fake()->phoneNumber(),
+        //     'birth_date' => fake()->dateTimeBetween('-60 years', '-24 years'),
+        //     'password' => bcrypt('123')
+        // ]);
 
-        User::create([
-            'first_name' => 'User',
-            'last_name' => 'User',
-            'email' => 'user@user.com',
-            'email_verified_at' => now(),
-            'role' => 'user',
-            'phone_number' => fake()->phoneNumber(),
-            'birth_date' => fake()->dateTimeBetween('-60 years', '-24 years'),
-            'password' => bcrypt('123')
-        ]);
+        // User::create([
+        //     'first_name' => 'User',
+        //     'last_name' => 'User',
+        //     'email' => 'user@user.com',
+        //     'email_verified_at' => now(),
+        //     'role' => 'user',
+        //     'phone_number' => fake()->phoneNumber(),
+        //     'birth_date' => fake()->dateTimeBetween('-60 years', '-24 years'),
+        //     'password' => bcrypt('123')
+        // ]);
 
         $pricings = [
             [
@@ -80,8 +80,8 @@ class DatabaseSeeder extends Seeder
             Pricing::create($item);
         }
 
-        User::factory(12)->create();
-        Outfit::factory(70)->create();
-        Room::factory(20)->create();
+        // User::factory(12)->create();
+        // Outfit::factory(70)->create();
+        // Room::factory(20)->create();
     }
 }

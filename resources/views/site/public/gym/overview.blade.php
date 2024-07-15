@@ -18,7 +18,7 @@
                     <div class="col-lg-8">
                         @auth
                         <!-- available subscriptions modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#availableSubsciption">M'enre gister à la salle</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#availableSubsciption">S'abonner</button>
                         <div class="modal fade" id="availableSubsciption" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-lg">
                                 <div class="modal-content ">
@@ -26,7 +26,7 @@
                                         <div class="d-flex justify-content-center">
                                             @foreach($room->pricings as $pricing)
                                             <div class="col-lg-3 mx-3">
-                                                <button onclick="payement(
+                                                <button type="button" onclick="payement(
                                                         '<?php echo ($pricing->price); ?>', 
                                                         '<?php echo ($authenticatedUser->email); ?>', 
                                                         '<?php echo ($authenticatedUser->last_name); ?>', 
@@ -37,7 +37,7 @@
                                                         '<?php echo ($room->id); ?>',
                                                         'null'
                                                     )" class="btn btn-outline-primary">
-                                                    Payer {{ $pricing->price }} FCFA
+                                                    {{ $pricing->name }} pour {{ $pricing->price }} FCFA
                                                 </button>
                                             </div>
                                             @endforeach
@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         @else
-                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">M'enre gister à la salle</button>
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">S'abonner</button>
                         @endauth
 
 
@@ -119,7 +119,7 @@
                                 Acheter à {{ $outfit->sale_price }} FCFA
                             </button>
                             @else
-                            <button type="button" class="btn btn-outline-primary mt-3 w-100" data-bs-toggle="modal" data-bs-target="#loginModal">M'enre gister à la salle</button>
+                            <button type="button" class="btn btn-outline-primary mt-3 w-100" data-bs-toggle="modal" data-bs-target="#loginModal">Acheter à {{ $outfit->sale_price }} FCFA</button>
                             @endauth
                         </div>
                     </div>

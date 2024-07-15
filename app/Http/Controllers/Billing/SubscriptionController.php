@@ -33,7 +33,7 @@ class SubscriptionController extends Controller
                 $subscriptionsList = Subscription::whereIn('room_id', $allRoomsID)->get();
 
                 // list of subscribers
-                $ids = Subscription::pluck('user_id');
+                $ids = $subscriptionsList->pluck('user_id');
                 $subscribersList = User::whereIn('id', $ids)->get();
             } else {
                 // list of subscriptions

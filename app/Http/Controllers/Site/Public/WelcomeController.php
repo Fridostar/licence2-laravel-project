@@ -62,6 +62,6 @@ class WelcomeController extends Controller
 
     public function map()
     {
-        return "Google Map goes here !";
+        return view('site.public.gym.room_map');
     }
 }
