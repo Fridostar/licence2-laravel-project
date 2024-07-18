@@ -16,16 +16,18 @@
                 @method($room->exists ? 'PUT' : 'POST')
 
                 <div class="card-body">
-                    <div class="col-12">
-                        <div class="form-group">
+                    <div class="col-lg-12">
+                        <div class="form-group mb-3">
                             <input id="search_input" type="text" class="position-relative form-control">
                         </div>
+
                         <div id="map_view" class="w-100" style="height: 350px;"></div>
-                        <div class="row mt-2">
+
+                        <div class="row mt-5">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="">Longitude</label>
-                                    <input id="lng" type="text" name="longitude" class="form-control @error('longitude') is-invalid @enderror">
+                                    <input id="longitude" type="text" name="longitude" value="{{ old('longitude', $room->longitude) }}" class="form-control @error('longitude') is-invalid @enderror">
                                     @error('longitude')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -34,7 +36,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="">Latitude</label>
-                                    <input id="lat" type="text" name="latitude" class="form-control @error('latitude') is-invalid @enderror">
+                                    <input id="latitude" type="text" name="latitude" value="{{ old('latitude', $room->latitude) }}" class="form-control @error('latitude') is-invalid @enderror">
                                     @error('latitude')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -42,6 +44,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-lg-12 mb-3">
                         @include('shared.form.input', [
                             'label' => 'Nom de salle',
@@ -167,21 +170,24 @@
             // map controller
             var map = new Circuit('lat', 'lng', 'map_view', 'search_input', icon, 'point');
             
-            map.addMarker({{ $room->latitude ?: 6.366667 }}, {{ $room->longitude ?: 2.433333 }}, null, {{$room->name }} );
+            map.addMarker(
+                '<?php echo ($room->latitude ?: 6.366667); ?>', '<?php echo ($room->longitude ?: 2.433333); ?>', null, '<?php echo ($room->name); ?>', 
+                // {{ $room->latitude ?: 6.366667 }}, {{ $room->longitude ?: 2.433333 }}, null, {{$room->name }} );
+            );
 
-            $('#lng').keypress(function(event) {
+            $('#longitude').keypress(function(event) {
                 if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
                     event.preventDefault();
                 }
             });
 
-            $('#lat').keypress(function(event) {
+            $('#latitude').keypress(function(event) {
                 if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
                     event.preventDefault();
                 }
             });
 
-            $('#lat').change(function(){
+            $('#latitude').change(function(){
                 val = parseFloat($(this).val())
                 if (val) {
                     let position = new google.maps.LatLng(val, map.markers[0].getPosition().lng());
@@ -189,7 +195,7 @@
                 }
             })
 
-            $('#lng').change(function(){
+            $('#longitude').change(function(){
                 val = parseFloat($(this).val())
                 if (val) {
                     let position = new google.maps.LatLng(map.markers[0].getPosition().lat(), val);

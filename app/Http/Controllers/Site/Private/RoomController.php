@@ -32,7 +32,7 @@ class RoomController extends Controller
         // get the search field value
         $search = $request->input('search');
 
-        if( $this->authenticatedUser->role == "admin") {
+        if ($this->authenticatedUser->role == "admin") {
             // do filtering
             if (isset($search)) {
                 $roomLists = Room::where('name', 'like', '%' . $search . '%')
@@ -82,7 +82,7 @@ class RoomController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request->all());
         $validatedData = $request->validate([
             'name' => 'required|string',
             'site_url' => 'nullable|string',
@@ -98,39 +98,35 @@ class RoomController extends Controller
 
         // dd($validatedData);
         (isset($request->site_url) == false) ? $siteUrl = 'http://127.0.0.1:8000' : $siteUrl = $validatedData['site_url'];
-        
 
-        try{
-            // first create the room
-            $room = Room::create([
-                'name' => $validatedData['name'],
-                'site_url' => $siteUrl,
-                'description' => $validatedData['description'],
-                'cover_image' => 'temporary_url',
-                'overview_image' => 'temporary_url',
-                'status' => $validatedData['status'],
-                'user_id' => Auth::user()->id,
-                'longitude' => $request->longitude,
-                'latitude' => $request->latitude
-            ]);
-    
-            // next connect the room & pricing to outfits
-            $room->outfits()->sync($validatedData['outfits']);
-            $room->pricings()->sync($validatedData['pricings']);
-    
-            // save updated image in storage & update the room images url
-            $room->update([
-                'cover_image' => $this->fileService->upload($validatedData['cover_image'], $this->fileStoragePath, "room_{$room->id}_cover_image"),
-                'overview_image' => $this->fileService->upload($validatedData['overview_image'], $this->fileStoragePath, "room_{$room->id}_overview_image"),
-            ]);
-            
-    
-            // finaly redirect with success msg
-            toast("La nouvelle salle a été ajouté avec succes", 'success');
-            return to_route('management.room.index');
-        } catch (\Exception $e) {
-            // Handle transaction failure
-        }
+
+        // first create the room
+        $room = Room::create([
+            'name' => $validatedData['name'],
+            'site_url' => $siteUrl,
+            'description' => $validatedData['description'],
+            'cover_image' => 'temporary_url',
+            'overview_image' => 'temporary_url',
+            'status' => $validatedData['status'],
+            'user_id' => Auth::user()->id,
+            'longitude' => $validatedData['longitude'],
+            'latitude' => $validatedData['latitude']
+        ]);
+
+        // next connect the room & pricing to outfits
+        $room->outfits()->sync($validatedData['outfits']);
+        $room->pricings()->sync($validatedData['pricings']);
+
+        // save updated image in storage & update the room images url
+        $room->update([
+            'cover_image' => $this->fileService->upload($validatedData['cover_image'], $this->fileStoragePath, "room_{$room->id}_cover_image"),
+            'overview_image' => $this->fileService->upload($validatedData['overview_image'], $this->fileStoragePath, "room_{$room->id}_overview_image"),
+        ]);
+
+
+        // finaly redirect with success msg
+        toast("La nouvelle salle a été ajouté avec succes", 'success');
+        return to_route('management.room.index');
     }
 
     public function show($id)
@@ -176,72 +172,65 @@ class RoomController extends Controller
         ]);
 
         // dd($validatedData);
-        try {
-            $room = Room::find($id);
 
-            // next update the connected the room & pricing on outfits
-            $room->outfits()->sync($validatedData['outfits']);
-            $room->pricings()->sync($validatedData['pricings']);
+        $room = Room::find($id);
 
-            // fetch the old image path
-            $newCoverImage = $room->cover_image;
-            $newOverviewImage = $room->overview_image;
+        // next update the connected the room & pricing on outfits
+        $room->outfits()->sync($validatedData['outfits']);
+        $room->pricings()->sync($validatedData['pricings']);
 
-            // if coverImage is set in the request inputs
-            if (isset($request['cover_image'])) {
-                // first delete the file images
-                $this->fileService->delete($room->cover_image);
-                // then create the save the new image
-                $newCoverImage = $this->fileService->upload($request['cover_image'], $this->fileStoragePath, "room_{$id}_cover_image");
-            }
+        // fetch the old image path
+        $newCoverImage = $room->cover_image;
+        $newOverviewImage = $room->overview_image;
 
-            // if overviewImage is set in the request inputs
-            if (isset($request['overview_image'])) {
-                // first delete the file images
-                $this->fileService->delete($room->overview_image);
-                // then create the save the new image
-                $newOverviewImage = $this->fileService->upload($request['overview_image'], $this->fileStoragePath, "room_{$id}_overview_image");
-            }
-
-            // finaly update the reste fields
-            $room->update([
-                'name' => $validatedData['name'],
-                'site_url' => $validatedData['site_url'],
-                'description' => $validatedData['description'],
-                'cover_image' => $newCoverImage,
-                'overview_image' => $newOverviewImage,
-                'status' => $validatedData['status'],
-                'longitude' => $request->longitude,
-                'latitude' => $request->latitude,
-            ]);
-
-            toast("La salle a été mise-à-jour avec succes", 'success');
-            return to_route('management.room.index');
-        } catch (\Exception $e) {
-            // Handle transaction failure
+        // if coverImage is set in the request inputs
+        if (isset($request['cover_image'])) {
+            // first delete the file images
+            $this->fileService->delete($room->cover_image);
+            // then create the save the new image
+            $newCoverImage = $this->fileService->upload($request['cover_image'], $this->fileStoragePath, "room_{$id}_cover_image");
         }
+
+        // if overviewImage is set in the request inputs
+        if (isset($request['overview_image'])) {
+            // first delete the file images
+            $this->fileService->delete($room->overview_image);
+            // then create the save the new image
+            $newOverviewImage = $this->fileService->upload($request['overview_image'], $this->fileStoragePath, "room_{$id}_overview_image");
+        }
+
+        // finaly update the reste fields
+        $room->update([
+            'name' => $validatedData['name'],
+            'site_url' => $validatedData['site_url'],
+            'description' => $validatedData['description'],
+            'cover_image' => $newCoverImage,
+            'overview_image' => $newOverviewImage,
+            'status' => $validatedData['status'],
+            'longitude' => $validatedData['longitude'],
+            'latitude' => $validatedData['latitude'],
+        ]);
+
+        toast("La salle a été mise-à-jour avec succes", 'success');
+        return to_route('management.room.index');
     }
 
     public function destroy($id)
     {
-        try {
-            $room = Room::find($id);
-    
-            // 1. first delete the file images
-            $this->fileService->delete([$room->cover_image, $room->overview_image]);
-    
-            // 2. next delete relation between this room and [outfits, princings]
-            $room->outfits()->detach();
-            $room->pricings()->detach();
-    
-            // 3. delete the outfit
-            $room->delete();
-    
-            // 4. finaly redirect with success msg
-            toast("La salle a été supprimée avec succes", 'success');
-            return redirect()->back();
-        } catch (\Exception $e) {
-            // Handle transaction failure
-        }
+        $room = Room::find($id);
+
+        // 1. first delete the file images
+        $this->fileService->delete([$room->cover_image, $room->overview_image]);
+
+        // 2. next delete relation between this room and [outfits, princings]
+        $room->outfits()->detach();
+        $room->pricings()->detach();
+
+        // 3. delete the outfit
+        $room->delete();
+
+        // 4. finaly redirect with success msg
+        toast("La salle a été supprimée avec succes", 'success');
+        return redirect()->back();
     }
 }
