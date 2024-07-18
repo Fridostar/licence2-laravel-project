@@ -18,29 +18,31 @@
                 <div class="card-body">
                     <div class="col-lg-12">
                         <div class="form-group mb-3">
-                            <input id="search_input" type="text" class="position-relative form-control">
+                            <input id="searchInput" type="text" class="position-relative form-control">
                         </div>
 
-                        <div id="map_view" class="w-100" style="height: 350px;"></div>
+                        <div id="mapView" class="w-100" style="height: 350px;"></div>
 
                         <div class="row mt-5">
                             <div class="col-6">
-                                <div class="form-group">
+                                @include('shared.form.input', [ 'label' => "Longitude", 'name' => "longitude", 'value' => $room->longitude, 'type' => "text"])
+                                <!-- <div class="form-group">
                                     <label for="">Longitude</label>
                                     <input id="longitude" type="text" name="longitude" value="{{ old('longitude', $room->longitude) }}" class="form-control @error('longitude') is-invalid @enderror">
                                     @error('longitude')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </div> -->
                             </div>
                             <div class="col-6">
-                                <div class="form-group">
+                                @include('shared.form.input', [ 'label' => "Latitude", 'name' => "latitude", 'value' => $room->latitude, 'type' => "text"])
+                                <!-- <div class="form-group">
                                     <label for="">Latitude</label>
                                     <input id="latitude" type="text" name="latitude" value="{{ old('latitude', $room->latitude) }}" class="form-control @error('latitude') is-invalid @enderror">
                                     @error('latitude')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -168,18 +170,12 @@
             }
 
             // map controller
-            var map = new Circuit('lat', 'lng', 'map_view', 'search_input', icon, 'point');
+            var map = new Circuit('latitude', 'longitude', 'mapView', 'searchInput', icon, 'point');
             
             map.addMarker(
-                '<?php echo ($room->latitude ?: 6.366667); ?>', '<?php echo ($room->longitude ?: 2.433333); ?>', null, '<?php echo ($room->name); ?>', 
-                // {{ $room->latitude ?: 6.366667 }}, {{ $room->longitude ?: 2.433333 }}, null, {{$room->name }} );
+                '<?php echo ($room->latitude); ?>', '<?php echo ($room->longitude); ?>', null, '<?php echo ($room->name); ?>'
+                // {{ $room->latitude ?: 6.366667 }}, {{ $room->longitude ?: 2.433333 }}, null, {{$room->name }}
             );
-
-            $('#longitude').keypress(function(event) {
-                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
-                    event.preventDefault();
-                }
-            });
 
             $('#latitude').keypress(function(event) {
                 if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
@@ -195,6 +191,12 @@
                 }
             })
 
+            $('#longitude').keypress(function(event) {
+                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    event.preventDefault();
+                }
+            });
+
             $('#longitude').change(function(){
                 val = parseFloat($(this).val())
                 if (val) {
@@ -202,7 +204,6 @@
                     map.moveMarker('', position);
                 }
             })
-
         });
     </script>
 @endpush

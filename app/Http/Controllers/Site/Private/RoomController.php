@@ -167,12 +167,11 @@ class RoomController extends Controller
             'status' => ['required', Rule::in(0, 1)],
             'outfits' => 'required|array',
             'pricings' => 'required|array',
-            'longitude' => 'required',
-            'latitude' => 'required',
+            'longitude' => 'nullable',
+            'latitude' => 'nullable',
         ]);
 
         // dd($validatedData);
-
         $room = Room::find($id);
 
         // next update the connected the room & pricing on outfits
