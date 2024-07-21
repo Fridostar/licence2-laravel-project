@@ -17,71 +17,31 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-        /*
-            // validate requeste input data
-            $validatedData = Validator::make(
-                // data to validate
-                $request->all(),
-
-                // validation rules
-                [
-                    'firstName' => 'required|string|max:255',
-                    'lastName' => 'required|string|max:255',
-                    'email' => 'required|string|email|max:255|unique:users',
-                    'phoneNumber' => 'required|string',
-                    'birthDate' => 'required|date',
-                    'password' => 'required|confirmed|min:8',
-                ],
-
-                // custome error messages
-                [
-                    'firstName.required' => 'Votre nom est obligatoire, veuillez le remplir',
-                    'firstName.max' => 'Votre nom ne doit pas dépassé 255 caractère',
-
-                    'lastName.required' => 'Votre prénom est obligatoire, veuillez le remplir',
-                    'lastName.max' => 'Votre prénom ne doit pas dépassé 255 caractère',
-
-                    'email.required' => 'Votre email est obligatoire, veuillez le remplir',
-                    'email.email' => 'Votre adresse mail n\'est pas valide',
-                    'email.max' => 'Vodre adresse mail ne doit pas dépassé 255 caractère',
-                    'email.unique' => 'Votre adresse mail renseigné n\'est pas disponible, veuillez le changer',
-
-                    'phoneNumber.required' => 'Votre numéro de téléphone est obligatoire, veuillez le remplir',
-
-                    'birthDate.required' => 'Votre date de naissance est obligatoire, veuillez le remplir',
-
-                    'password.required' => 'Votre mot de passe est obligatoire, veuillez le remplir',
-                    'password.confirmed' => 'La confirmation de votre mot de passe ne correspond pas',
-                    'password.min' => 'Votre mot de passe doit être d\'au moins 8 caractères',
-                ]
-            );
-        */
-
         $validatedData = $request->validate(
             [
-                'firstName' => 'required|string|max:255',
-                'lastName' => 'required|string|max:255',
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'phoneNumber' => 'required|string|unique:users',
-                'birthDate' => 'required|date',
+                'phone_number' => 'required|string|unique:users',
+                'birth_date' => 'required|date',
                 'password' => 'required|confirmed',
             ],
             [
-                'firstName.required' => 'Veuillez entrer votre nom',
-                'firstName.max' => 'Votre nom ne doit pas dépassé 255 caractère',
+                'first_name.required' => 'Veuillez entrer votre nom',
+                'first_name.max' => 'Votre nom ne doit pas dépassé 255 caractère',
 
-                'lastName.required' => 'Veuillez entrer votre prénom',
-                'lastName.max' => 'Votre prénom ne doit pas dépassé 255 caractère',
+                'last_name.required' => 'Veuillez entrer votre prénom',
+                'last_name.max' => 'Votre prénom ne doit pas dépassé 255 caractère',
 
                 'email.required' => 'Veuillez entrer votre mail',
                 'email.email' => 'Votre adresse mail n\'est pas valide',
                 'email.max' => 'Vodre adresse mail ne doit pas dépassé 255 caractère',
                 'email.unique' => 'Votre adresse mail n\'est pas disponible',
 
-                'phoneNumber.required' => 'Veuillez entrer votre téléphone',
-                'phoneNumber.unique' => 'Votre numéros n\'est pas disponible',
+                'phone_number.required' => 'Veuillez entrer votre téléphone',
+                'phone_number.unique' => 'Votre numéros n\'est pas disponible',
 
-                'birthDate.required' => 'Veuillez entrer votre date de naissance',
+                'birth_date.required' => 'Veuillez entrer votre date de naissance',
 
                 'password.required' => 'Veuillez saisir votre mot de passe ',
                 'password.confirmed' => 'La confirmation du mot de passe est incorrect',
@@ -89,11 +49,11 @@ class RegisterController extends Controller
         );
 
         $user = User::create([
-            'first_name' => $validatedData['firstName'],
-            'last_name' => $validatedData['lastName'],
+            'first_name' => $validatedData['first_name'],
+            'last_name' => $validatedData['last_name'],
             'email' => $validatedData['email'],
-            'phone_number' => $validatedData['phoneNumber'],
-            'birth_date' => $validatedData['birthDate'],
+            'phone_number' => $validatedData['phone_number'],
+            'birth_date' => $validatedData['birth_date'],
             'password' => bcrypt($validatedData['password'])
         ]);
 

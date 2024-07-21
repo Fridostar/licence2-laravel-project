@@ -15,10 +15,10 @@
                                 <div class="col-lg-6 mb-3">
                                     <div class="mb-3">
                                         <label for="firstName" class="form-label">Prénom :</label>
-                                        <input name="firstName" value="{{old('first_name')}}" type="text" class="form-control" id="firstName" placeholder="Entrez votre prénom">
+                                        <input name="first_name" value="{{old('first_name')}}" type="text" class="form-control" id="firstName" placeholder="Entrez votre prénom">
                                     </div>
                                     <span class="text-danger">
-                                        @error('firstName')
+                                        @error('first_name')
                                         <small class="text-tiny">{{$message}}</small>
                                         @enderror
                                     </span>
@@ -26,10 +26,10 @@
                                 <div class="col-lg-6 mb-3">
                                     <div class="mb-3">
                                         <label for="lastName" class="form-label">Nom :</label>
-                                        <input name="lastName" value="{{old('lastName')}}" type="text" class="form-control" id="lastName" placeholder="Entrez votre nom">
+                                        <input name="last_name" value="{{old('last_name')}}" type="text" class="form-control" id="lastName" placeholder="Entrez votre nom">
                                     </div>
                                     <span class="text-danger">
-                                        @error('lastName')
+                                        @error('last_name')
                                         <small class="text-tiny">{{$message}}</small>
                                         @enderror
                                     </span>
@@ -48,10 +48,10 @@
                                 <div class="col-lg-6 mb-3">
                                     <div class="mb-3">
                                         <label for="phoneNumber" class="form-label">Télephone :</label>
-                                        <input name="phoneNumber" value="{{old('phoneNumber')}}" type="text" class="form-control" id="phoneNumber" placeholder="Numéro de téléphone">
+                                        <input name="phone_number" value="{{old('phone_number')}}" type="text" class="form-control" id="phoneNumber" placeholder="Numéro de téléphone">
                                     </div>
                                     <span class="text-danger">
-                                        @error('phoneNumber')
+                                        @error('phone_number')
                                         <small class="text-tiny">{{$message}}</small>
                                         @enderror
                                     </span>
@@ -59,10 +59,10 @@
                                 <div class="col-lg-6 mb-3">
                                     <div class="mb-3">
                                         <label for="birthDate" class="form-label">Date de naissance :</label>
-                                        <input name="birthDate" value="{{old('birthDate')}}" type="date" class="form-control" id="birthDate" placeholder="">
+                                        <input name="birth_date" value="{{old('birth_date')}}" type="date" class="form-control" id="birthDate" placeholder="">
                                     </div>
                                     <span class="text-danger">
-                                        @error('birthDate')
+                                        @error('birth_date')
                                         <small class="text-tiny">{{$message}}</small>
                                         @enderror
                                     </span>
