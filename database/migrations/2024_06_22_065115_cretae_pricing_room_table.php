@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('pricing_id');
             $table->foreign('pricing_id')
                   ->references('id')
-                  ->on('outfits')
+                  ->on('pricings')
                   ->onUpdate('cascade')
                   ->onDelete('no action');
 
