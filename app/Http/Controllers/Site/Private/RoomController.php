@@ -199,16 +199,15 @@ class RoomController extends Controller
         }
 
         // finaly update the reste fields
-        $room->update([
-            'name' => $validatedData['name'],
-            'site_url' => $validatedData['site_url'],
-            'description' => $validatedData['description'],
-            'cover_image' => $newCoverImage,
-            'overview_image' => $newOverviewImage,
-            'status' => $validatedData['status'],
-            'longitude' => $validatedData['longitude'],
-            'latitude' => $validatedData['latitude'],
-        ]);
+        $room->name = $validatedData['name'];
+        $room->site_url = $validatedData['site_url'];
+        $room->description = $validatedData['description'];
+        $room->cover_image = $newCoverImage;
+        $room->overview_image = $newOverviewImage;
+        $room->status = $validatedData['status'];
+        $room->latitude = $request['latitude'] ? $request['latitude'] : $room->latitude;
+        $room->longitude = $request['longitude'] ? $request['longitude'] : $room->longitude;
+        $room->save();
 
         toast("La salle a été mise-à-jour avec succes", 'success');
         return to_route('management.room.index');
